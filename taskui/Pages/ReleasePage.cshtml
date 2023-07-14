@@ -1,18 +1,15 @@
-﻿@page "/ReleasePage/{id}"
+﻿@page "/ReleasePage/{pageId:int}"
 @model ReleasePageModel
 @{
     ViewData["Title"] = "Release Page";
 }
-<h1 class="display-5 mt-4">Release Update - November 29, 2023</h1>
 
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
+<h1 class="display-5 mt-4">@Model.DisplayHeader.ReleaseName - @Model.DisplayHeader.ReleaseDate</h1>
+<p>@Model.DisplayHeader.ReleaseDate</p>
+<p>@Model.DisplayHeader.ShortDescription</p>
+<p>@Model.DisplayHeader.LongDescription</p>
 
-<img src="https://picsum.photos/id/235/600/400" />
-
-<p>
-    Lorem ipsum dolor sit amet, consectetur adipisci elit, sed eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur. Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-</p>
-
-<img src="https://picsum.photos/id/235/600/400" />
+@* todo this*@
+<form method="post">
+    <button asp-page-handler="delete" asp-route-id="@Model.DisplayHeader.HeaderId" type="button" class="btn btn-danger">Delete Release</button>
+</form>

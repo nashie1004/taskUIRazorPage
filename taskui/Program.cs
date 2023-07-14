@@ -1,7 +1,33 @@
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.EntityFrameworkCore;
+using taskui.Contexts;
+using taskui.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddControllers();
+
+
+#if DEBUG
+var connectionString = "DefaultConnection";
+#else
+var connectionString = "ProductionConnection";
+#endif
+
+builder.Services.AddDbContext<ReleaseNoteContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString(connectionString),
+    sqlServerOptionsAction: sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure();
+    });
+});
+
+builder.Services.AddScoped<IDataRepository, DataRepository>();
+builder.Services.AddScoped<IDataAccess, DataAccess>();
+
 
 var app = builder.Build();
 
@@ -20,6 +46,7 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllers();
 app.MapRazorPages();
 
 app.Run();

@@ -1,0 +1,42 @@
+﻿@page "/CreatePage"
+@model taskui.Pages.CreatePageModel
+
+@{
+    ViewData["Title"] = "Create Page";
+}
+
+<h1 class="display-5 mt-4">Fill up form</h1>
+<div class="form-group mt-3">
+    <label for="exampleInputEmail1">Release Name</label>
+    <input id="ReleaseName" type="text" class="form-control" placeholder="Release Name">
+</div>
+<div class="form-group mt-3">
+    <label for="exampleInputPassword1">Release Date</label>
+    <input id="ReleaseDate" type="date" class="form-control" placeholder="Release Date">
+</div>
+<div class="form-group mt-3">
+    <label for="exampleInputPassword1">Short Description</label>
+    <input id="ShortDescription" type="text" class="form-control" placeholder="Short Description">
+</div>
+<div class="form-floating mt-4">
+    <textarea id="LongDescription" class="form-control" placeholder="Description here" id="floatingTextarea2" style="height: 100px"></textarea>
+    <label for="floatingTextarea2">Long Description</label>
+</div>
+
+<button id="addDetailBtn" type="button" class="mt-4 btn btn-dark">Add Detail</button>
+
+<table class="table table-striped table-hover mt-1">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Type</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+        </tr>
+    </thead>
+    <tbody id="addDetailsContainer">
+        
+    </tbody>
+</table>
+
+<button id="submitBtn" class="btn btn-primary mt-3">Submit</button>

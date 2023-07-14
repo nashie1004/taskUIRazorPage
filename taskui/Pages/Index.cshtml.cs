@@ -1,20 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using taskui.Models;
+using taskui.Services;
 
 namespace taskui.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly IDataAccess dataAccess_;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(IDataAccess dataAccess)
         {
-            _logger = logger;
+            dataAccess_ = dataAccess;
         }
 
-        public void OnGet()
-        {
+        public List<Header> HeaderList { get; set; }
 
+        public async Task OnGet()
+        {
+            HeaderList = await dataAccess_.GetHeaderList();
         }
     }
 }
