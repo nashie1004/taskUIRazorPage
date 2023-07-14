@@ -1,4 +1,5 @@
 ﻿@page
+@using taskui.Models;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
@@ -8,10 +9,6 @@
 
     @foreach (var result in Model.HeaderList)
     {
-        @foreach (var detail in result.Detail)
-        {
-            
-        }
 
         <div class="accordion-item">
             <h2 class="accordion-header">
@@ -21,26 +18,32 @@
             </h2>
             <div id="@result.HeaderId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                    <h6>@result.ShortDescription</h6>
+
+                    <h6>Short Description: @result.ShortDescription</h6>
+                    <h6>Long Description: @result.LongDescription</h6>
                     <a style="text-decoration: none;" href="/ReleasePage/@result.HeaderId">Go to this page</a>
-                    <br />
-                    <br />
 
-                    <h2 class="display-6">Enhancements</h2>
+                    <br />
+                    <br />
+                    <h2 class="display-6">Enhancement</h2>
                     <hr class="hr hr-blurry" />
                     <ul>
-                        <li>@result.ShortDescription</li>
-                        <li>@result.LongDescription</li>
+                        @foreach(var detail in result.Detail)
+                        {
+                            <li>@detail.Type - @detail.Name - @detail.Description</li>
+                        }
                     </ul>
-
                     <br />
-
-                    <h2 class="display-6">Fixes</h2>
+                    <br />
+                    <h2 class="display-6">Bugs/Fixes</h2>
                     <hr class="hr hr-blurry" />
                     <ul>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                        <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
+                        @foreach (var detail in result.Detail)
+                        {
+                            <li>@detail.Type - @detail.Name - @detail.Description</li>
+                        }
                     </ul>
+
                     <button type="button" class="btn btn-outline-primary mx-auto">Print out</button>
                 </div>
             </div>

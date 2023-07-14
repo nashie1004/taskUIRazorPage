@@ -31,20 +31,25 @@ document.querySelector("#submitBtn").onclick = function () {
     releaseDate = document.querySelector("#ReleaseDate").value;
     shortDescription = document.querySelector("#ShortDescription").value;
     longDescription = document.querySelector("#LongDescription").value;
-
+    console.log(longDescription)
     // details
+    let checkArray = []
     document.querySelectorAll(".detailType").forEach((dType, i) => {
 
         document.querySelectorAll(".detailName").forEach((dName) => {
 
             document.querySelectorAll(".detailDescription").forEach(dDescription => {
 
-                array.push({
-                    type: dType.value,
-                    name: dName.value,
-                    description: dDescription.value
-                })
-                
+                if (!checkArray.includes(dDescription)) {
+
+                    checkArray.push(dDescription)
+
+                    array.push({
+                        type: dType.value,
+                        name: dName.value,
+                        description: dDescription.value
+                    })
+                } 
             })
         })
     })

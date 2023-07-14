@@ -10,6 +10,7 @@ namespace taskui.Pages
 
         public IndexModel(IDataAccess dataAccess)
         {
+
             dataAccess_ = dataAccess;
         }
 

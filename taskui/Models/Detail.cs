@@ -12,5 +12,8 @@ namespace taskui.Models
         public string? Description { get; set; }
 
         public virtual Header? Header { get; set; }
+
+        // 1 - enhacnemnt
+        // 2- bugs
     }
 }

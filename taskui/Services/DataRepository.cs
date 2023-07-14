@@ -75,14 +75,18 @@ namespace taskui.Services
         // 2 newly created method
         public async Task SubmitAHeader(Header submitHeader)
         {
-            var result = await context_.Header.AddAsync(submitHeader);
-            await SaveRecord();
+            try
+            {
+                var result = await context_.Header.AddAsync(submitHeader);
+                await SaveRecord();
+            } 
+            catch (Exception ex) 
+            { }
             return;
         }
         public Header? GetPageInfo(int pageId)
         {
             Header? result = context_.Header.FirstOrDefault(w => w.HeaderId == pageId);
-            Console.WriteLine(result);
             return result;
         }
     }

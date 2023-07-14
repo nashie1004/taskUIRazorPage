@@ -16,7 +16,15 @@ namespace taskui.Services
             var retValue = new List<Header>();
             try
             {
-                retValue = await repository_.GetList<Header>();
+                //retValue = await repository_.GetList<Header>();
+                var header = await repository_.GetList<Header>();
+                var detail = await repository_.GetList<Detail>();
+
+                foreach (var item in header)
+                {
+                    item.Detail = detail.Where(p => p.HeaderId == item.HeaderId).ToList();
+                }
+                return header;
             }
             catch (Exception ex)
             {
@@ -46,7 +54,8 @@ namespace taskui.Services
             try
             {
                 return result = repository_.GetPageInfo(pageId);
-            } catch (Exception ex) 
+            } 
+            catch (Exception ex) 
             {
                 return result;   
             }

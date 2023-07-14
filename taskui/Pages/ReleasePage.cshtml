@@ -5,11 +5,17 @@
 }
 
 <h1 class="display-5 mt-4">@Model.DisplayHeader.ReleaseName - @Model.DisplayHeader.ReleaseDate</h1>
-<p>@Model.DisplayHeader.ReleaseDate</p>
-<p>@Model.DisplayHeader.ShortDescription</p>
-<p>@Model.DisplayHeader.LongDescription</p>
+<p>Short Description: @Model.DisplayHeader.ShortDescription</p>
+<p>Long Description: @Model.DisplayHeader.LongDescription</p>
 
-@* todo this*@
-<form method="post">
-    <button asp-page-handler="delete" asp-route-id="@Model.DisplayHeader.HeaderId" type="button" class="btn btn-danger">Delete Release</button>
-</form>
+@foreach (var item in Model.DisplayHeader.Detail)
+{
+    <h6>
+        @item.Type - @item.Name
+    </h6>
+    <p>@item.Description</p>
+}
+
+@* todo this
+    <a href=""></a>
+*@
