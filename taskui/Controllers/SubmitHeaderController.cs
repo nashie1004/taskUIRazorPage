@@ -10,19 +10,19 @@ namespace taskui.Contoller
     [ApiController]
     public class SubmitHeaderController : Controller
     { 
-        /*
+        
         private readonly IDataAccess dataAccess_;
         public SubmitHeaderController(IDataAccess dataAccess)
         {
             dataAccess_ = dataAccess;
         }
-        */
+        
         [HttpPost]
         public SubmitHeader SubmitNewHeader([FromBody] SubmitHeader submit)
         {
             try
             {
-                /*
+                
                 ICollection<Detail> tempDetails = new Collection<Detail>();
 
                 foreach(var item in submit.Details) 
@@ -46,7 +46,7 @@ namespace taskui.Contoller
                 };
 
                 dataAccess_.SubmitForm(newHeader);
-                */
+                
                 return submit;
             } 
             catch (Exception ex)
@@ -57,13 +57,14 @@ namespace taskui.Contoller
         
 
         [HttpGet]
-        [Route("deleteAPage")]
-        public IActionResult DeleteAPage()
+        [Route("deleteAPage/{pageId}")]
+        public IActionResult DeleteAPage(int pageId)
         {
-            //TODO
+            try
+            {
+                dataAccess_.DeleteAPage(pageId);
+            } catch (Exception ex) { }
 
-            //dataAccess
-            return Ok("hi delete page here");
             return Redirect("/");
         }
 
@@ -71,10 +72,33 @@ namespace taskui.Contoller
         [Route("editAPage")]
         public IActionResult EditAPage([FromBody] SubmitHeader submit)
         {
-            //TODO
             try
             {
-                //
+                ICollection<Detail> tempDetails = new Collection<Detail>();
+                
+                foreach(var item in submit.Details)
+                {
+                    tempDetails.Add(
+                        new Detail()
+                        {
+                            Type = item.Type,
+                            Name = item.Name,
+                            Description = item.Description,
+                        }
+                    );
+                }
+
+                Header header = new Header()
+                {
+                    ReleaseName = submit.ReleaseName,
+                    ReleaseDate = submit.ReleaseDate,
+                    ShortDescription = submit.ShortDescription,
+                    LongDescription = submit.LongDescription,
+                    Detail = tempDetails
+                };
+
+                dataAccess_.EditAPage(header);
+                return Redirect("/");
             } catch (Exception ex) { }
 
             return Redirect("/");

@@ -63,19 +63,17 @@ namespace taskui.Services
 
         public void EditAPage(Header modifyThisHeader)
         {
-            // TODO
             try
             {
-                //repository_.EditPage();
+                repository_.EditPage(modifyThisHeader);
             }
             catch (Exception ex) { }
         }
         public void DeleteAPage(int pageId)
         {
-            // TODO
             try
             {
-                repository_.DeletePage(1);
+                repository_.DeletePage(pageId);
             }
             catch (Exception ex) { }
         }

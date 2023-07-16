@@ -72,7 +72,7 @@ namespace taskui.Services
             return Convert.ToBoolean(result);
         }
 
-        // 2 newly created method
+        // 4 newly created method
         public async Task SubmitAHeader(Header submitHeader)
         {
             try
@@ -93,14 +93,39 @@ namespace taskui.Services
         {
             try
             {
-                //
+                /*
+                var found = context_.Header
+                    .FirstOrDefault(item => item.HeaderId == modifyThisHeader.HeaderId);
+                
+                if (found != null)
+                {
+                    found.ReleaseName = modifyThisHeader.ReleaseName;
+                    found.ReleaseDate = modifyThisHeader.ReleaseDate;
+                    found.ShortDescription = modifyThisHeader.ShortDescription;
+                    found.LongDescription = modifyThisHeader.LongDescription;
+                    found.Detail = modifyThisHeader.Detail;
+
+                    context_.SaveChanges();
+                }
+                */
+
             } catch (Exception ex) { }
         }
         public void DeletePage(int pageId)
         {
             try
             {
-                //
+                /*
+                var found = context_.Header
+                    .FirstOrDefault(item => item.HeaderId == pageId);
+                
+                if (found != null)
+                {
+                    context_.Remove(found);
+                    context_.SaveChanges();
+                }
+                */
+                
             }
             catch (Exception ex) { }
         }

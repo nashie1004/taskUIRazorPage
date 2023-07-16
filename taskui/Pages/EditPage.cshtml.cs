@@ -18,6 +18,8 @@ namespace taskui.Pages
         public Header DisplayHeader { get; set; }
         public void OnGet()
         {
+            /*
+             
             var result = dataAccess_.GetOneReleasePage(pageId);
             if (result == null)
             {
@@ -27,6 +29,7 @@ namespace taskui.Pages
             {
                 DisplayHeader = result;
             }
+             */
         }
     }
 }
