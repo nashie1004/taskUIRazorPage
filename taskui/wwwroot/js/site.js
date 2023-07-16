@@ -3,28 +3,29 @@
 let count = 1;
 
 document.querySelector("#addDetailBtn").onclick = () => {
-    document.querySelector("#addDetailsContainer").innerHTML += `
-       <tr>
-            <th>${count++}</th>
-            <td>
-                <select class="detailType form-select" aria-label="Default select example">
-                  <option selected value="1">1 - Enhancements</option>
-                  <option value="2">2 - Bugs/Fixes</option>
-                </select>
-            </td>
-            <td>
-                <input value="Name here #${count - 1}" class="detailName 
-                form-control form-control-sm" type="text" placeholder="Name..." aria-label="Name...S">
-            </td>
-            <td>
-                <input value="Description here #${count - 1}" 
-                class="detailDescription form-control form-control-sm" type="text" placeholder="Description..." aria-label="Description...S">
-            </td>
-            <td>
-                <button type="button" class="deleteDetailBtnOnTable btn btn-danger">Delete</button>
-            </td>
-        </tr>
-    `
+    let div = document.createElement("tr");
+    div.innerHTML = `
+        <th>${count++}</th>
+        <td>
+            <select class="detailType form-select" aria-label="Default select example">
+                <option selected value="1">1 - Enhancements</option>
+                <option value="2">2 - Bugs/Fixes</option>
+            </select>
+        </td>
+        <td>
+            <input value="Name here #${count - 1}" class="detailName 
+            form-control form-control-sm" type="text" placeholder="Name..." aria-label="Name...S">
+        </td>
+        <td>
+            <input value="Description here #${count - 1}" 
+            class="detailDescription form-control form-control-sm" type="text" placeholder="Description..." aria-label="Description...S">
+        </td>
+        <td>
+            <button type="button" class="deleteDetailBtnOnTable btn btn-danger">Delete</button>
+        </td>
+    `;
+
+    document.querySelector("#addDetailsContainer").append(div); 
 
     document.querySelectorAll(".deleteDetailBtnOnTable").forEach(item => {
         item.addEventListener("click", (e) => {
@@ -39,7 +40,19 @@ let releaseDate
 let shortDescription
 let longDescription
 
-document.querySelector("#submitBtn").onclick = function () {
+document.querySelector("#submitBtnCreatePage").onclick = function () {
+    getInputValues()
+    submitCreateNewPageFunction()
+}
+
+document.querySelector("#submitBtnEditPage").onclick = function () {
+    getInputValues();
+    // todo
+    submitEditPageFunction()
+}
+
+// FOR CREATING PAGE
+function getInputValues() {
     // main header
     releaseName = document.querySelector("#ReleaseName").value;
     releaseDate = document.querySelector("#ReleaseDate").value;
@@ -54,7 +67,14 @@ document.querySelector("#submitBtn").onclick = function () {
 
             document.querySelectorAll(".detailDescription").forEach(dDescription => {
 
-                if (!checkArray.includes(dDescription)) {
+                let addCheck;
+                if (dDescription === "") {
+                    addCheck = `${count}`;
+                } else {
+                    addCheck = dDescription;
+                }
+
+                if (!checkArray.includes(addCheck)) {
 
                     checkArray.push(dDescription)
 
@@ -64,15 +84,13 @@ document.querySelector("#submitBtn").onclick = function () {
                         name: dName.value,
                         description: dDescription.value
                     })
-                } 
+                }
             })
         })
     })
-
-    submitFunction()
 }
 
-async function submitFunction() {
+async function submitCreateNewPageFunction() {
     const res = await fetch("https://localhost:7249/SubmitHeader", {
 
         method: "POST",
@@ -91,4 +109,27 @@ async function submitFunction() {
     const data = await res.json();
     console.log(data);
     window.location.href = "/";
+}
+async function submitEditPageFunction() {
+    // todo fix this
+    /*
+        const res = await fetch("https://localhost:7249/SubmitHeader/editAPage", {
+
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                ReleaseName: releaseName,
+                ReleaseDate: releaseDate,
+                ShortDescription: shortDescription,
+                LongDescription: longDescription,
+                Details: array
+            })
+
+        })
+        const data = await res.json();
+        console.log(data);
+        window.location.href = "/";
+    */
 }

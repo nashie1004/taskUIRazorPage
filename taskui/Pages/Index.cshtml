@@ -18,11 +18,21 @@
             <div id="@result.HeaderId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
 
-                    <h6>Short Description: @result.ShortDescription</h6>
+                    <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
+                        Delete
+                    </a>
+                    <a class="btn btn-outline-primary" href="/EditPage">
+                        Edit
+                    </a>
+                    <a class="btn btn-outline-primary" href="/ReleasePage/1">
+                        Go to this page
+                    </a>
+                    <br />
+
+                    <h6 class="mt-1">Short Description: @result.ShortDescription</h6>
                     <h6>Long Description: @result.LongDescription</h6>
                     <a style="text-decoration: none;" href="/ReleasePage/@result.HeaderId">Go to this page</a>
 
-                    <br />
                     <br />
                     <h2 class="display-6">Enhancement</h2>
                     <hr class="hr hr-blurry" />
@@ -49,12 +59,6 @@
                         }
                     </ul>
 
-                    <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
-                        Delete
-                    </a>
-                    <a class="btn btn-outline-primary" href="/EditPage">
-                        Edit
-                    </a>
                 </div>
             </div>
         </div>
@@ -70,11 +74,20 @@
         <div id="TEST" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
             <div class="accordion-body">
 
-                <h6>Short Description: TEST</h6>
-                <h6>Long Description: TEST</h6>
-                <a style="text-decoration: none;" href="/ReleasePage/1">Go to this page</a>
-
+                <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
+                    Delete
+                </a>
+                <a class="btn btn-outline-primary" href="/EditPage">
+                    Edit
+                </a>
+                <a class="btn btn-outline-primary" href="/ReleasePage/1">
+                    Go to this page
+                </a>
                 <br />
+
+                <h6 class="mt-2">Short Description: TEST</h6>
+                <h6>Long Description: TEST</h6>
+
                 <br />
                 <h2 class="display-6">Enhancement</h2>
                 <hr class="hr hr-blurry" />
@@ -88,12 +101,6 @@
                     <li>TYPE - NAME - DESCRIPTION</li>
                 </ul>
 
-                <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
-                    Delete
-                </a>
-                <a class="btn btn-outline-primary" href="/EditPage">
-                    Edit
-                </a>
             </div>
         </div>
     </div>
