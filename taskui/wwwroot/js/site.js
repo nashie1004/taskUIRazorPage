@@ -62,12 +62,12 @@ function getInputValues() {
     // details
     let checkArray = []
     document.querySelectorAll(".detailType").forEach((dType, i) => {
+        let addCheck = "";
 
         document.querySelectorAll(".detailName").forEach((dName) => {
 
             document.querySelectorAll(".detailDescription").forEach(dDescription => {
 
-                let addCheck;
                 if (dDescription === "") {
                     addCheck = `${count}`;
                 } else {
@@ -80,7 +80,7 @@ function getInputValues() {
 
                     array.push({
                         // convert dType aka select to number
-                        type: Number(dType.value),
+                        type: parseInt(dType.value),
                         name: dName.value,
                         description: dDescription.value
                     })

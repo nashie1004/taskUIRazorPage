@@ -89,6 +89,21 @@ namespace taskui.Services
             Header? result = context_.Header.FirstOrDefault(w => w.HeaderId == pageId);
             return result;
         }
+        public void EditPage(Header modifyThisHeader)
+        {
+            try
+            {
+                //
+            } catch (Exception ex) { }
+        }
+        public void DeletePage(int pageId)
+        {
+            try
+            {
+                //
+            }
+            catch (Exception ex) { }
+        }
     }
     public interface IDataRepository
     {
@@ -110,5 +125,7 @@ namespace taskui.Services
 
         Task SubmitAHeader(Header submitHeader);
         Header? GetPageInfo(int pageId);
+        void EditPage(Header modifyThisHeader);
+        void DeletePage(int pageId);
     }
 }

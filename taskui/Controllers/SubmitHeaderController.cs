@@ -58,14 +58,22 @@ namespace taskui.Contoller
         [Route("deleteAPage")]
         public IActionResult DeleteAPage()
         {
+            //TODO
+
+            //dataAccess
             return Ok("hi delete page here");
+            return Redirect("/");
         }
 
         [HttpGet]
         [Route("editAPage")]
         public IActionResult EditAPage()
         {
+            //TODO
+
+            //dataAccess
             return Ok("hi edit page here");
+            return Redirect("/");
         }
     }
 }

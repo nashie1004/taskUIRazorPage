@@ -60,6 +60,25 @@ namespace taskui.Services
                 return result;   
             }
         }
+
+        public void EditAPage(Header modifyThisHeader)
+        {
+            // TODO
+            try
+            {
+                //repository_.EditPage();
+            }
+            catch (Exception ex) { }
+        }
+        public void DeleteAPage(int pageId)
+        {
+            // TODO
+            try
+            {
+                repository_.DeletePage(1);
+            }
+            catch (Exception ex) { }
+        }
     }
 
     public interface IDataAccess
@@ -67,5 +86,7 @@ namespace taskui.Services
         Task<List<Header>> GetHeaderList();
         Task SubmitForm(Header submitHeader);
         Header? GetOneReleasePage(int id);
+        void EditAPage(Header modifyThisHeader);
+        void DeleteAPage(int pageId);
     }
 }
