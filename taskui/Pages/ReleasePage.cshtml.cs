@@ -29,10 +29,5 @@ namespace taskui.Pages
                 DisplayHeader = result;
             }
         }
-
-        public void OnPostDelete(int id)
-        {
-            Console.WriteLine(id);
-        }
     }
 }

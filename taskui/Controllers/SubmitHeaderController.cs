@@ -16,12 +16,13 @@ namespace taskui.Contoller
         {
             dataAccess_ = dataAccess;
         }
-
+        */
         [HttpPost]
         public SubmitHeader SubmitNewHeader([FromBody] SubmitHeader submit)
         {
             try
             {
+                /*
                 ICollection<Detail> tempDetails = new Collection<Detail>();
 
                 foreach(var item in submit.Details) 
@@ -45,6 +46,7 @@ namespace taskui.Contoller
                 };
 
                 dataAccess_.SubmitForm(newHeader);
+                */
                 return submit;
             } 
             catch (Exception ex)
@@ -52,7 +54,7 @@ namespace taskui.Contoller
                 return submit;
             }
         }
-        */
+        
 
         [HttpGet]
         [Route("deleteAPage")]
@@ -65,14 +67,16 @@ namespace taskui.Contoller
             return Redirect("/");
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("editAPage")]
-        public IActionResult EditAPage()
+        public IActionResult EditAPage([FromBody] SubmitHeader submit)
         {
             //TODO
+            try
+            {
+                //
+            } catch (Exception ex) { }
 
-            //dataAccess
-            return Ok("hi edit page here");
             return Redirect("/");
         }
     }

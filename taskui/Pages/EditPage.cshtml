@@ -1,27 +1,28 @@
-﻿@page "/EditPage"
+﻿@page "/EditPage/{pageId:int}"
 @model taskui.Pages.EditPageModel
 @{
     ViewData["Title"] = "Edit Page";
+    //public int count = 1;
 }
 
 <h1 class="display-5 mt-4">Edit</h1>
 
 <div class="form-group mt-3">
     <label for="exampleInputEmail1">Release Name</label>
-    <input value="Release name here..." id="ReleaseName" type="text" class="form-control" placeholder="Release Name">
+    <input value="@Model.DisplayHeader.ReleaseName" id="ReleaseName" type="text" class="form-control" placeholder="Release Name">
 </div>
 <div class="form-group mt-3">
     <label for="exampleInputPassword1">Release Date</label>
-    <input value="2020-02-02" id="ReleaseDate" type="date" class="form-control" placeholder="Release Date">
+    <input value="@Model.DisplayHeader.ReleaseDate" id="ReleaseDate" type="date" class="form-control" placeholder="Release Date">
 </div>
 <div class="form-group mt-3">
     <label for="exampleInputPassword1">Short Description</label>
-    <input value="Short description here..." id="ShortDescription" type="text" class="form-control" placeholder="Short Description">
+    <input value="@Model.DisplayHeader.ShortDescription" id="ShortDescription" type="text" class="form-control" placeholder="Short Description">
 </div>
 <div class="form-floating mt-4">
     <textarea textcontent="test value here change this" id="LongDescription"
               class="form-control" placeholder="Description here" style="height: 100px"
-    >Long description here...
+    >@Model.DisplayHeader.LongDescription
     </textarea>
     <label for="floatingTextarea2">Long Description</label>
 </div>
@@ -39,8 +40,38 @@
         </tr>
     </thead>
     <tbody id="addDetailsContainer">
-        
+        @foreach (var item in Model.DisplayHeader.Detail)
+        {
+            <tr data-trid="@item.DetailId">
+                <th>@item.HeaderId</th>
+                <td>
+                    <select class="detailType form-select" aria-label="Default select example">
+                        @if (item.Type == 1)
+                        {
+                            <option selected value="1">1 - Enhancements</option>
+                            <option value="2">2 - Bugs/Fixes</option>
+                        }
+                        else
+                        {
+                            <option value="1">1 - Enhancements</option>
+                            <option selected value="2">2 - Bugs/Fixes</option>
+                        }
+                    </select>
+                </td>
+                <td>
+                    <input value="@item.Name" class="detailName
+                    form-control form-control-sm" type="text" placeholder="Name..." aria-label="Name...S">
+                </td>
+                <td>
+                    <input value="@item.Description"
+                           class="detailDescription form-control form-control-sm" type="text" placeholder="Description..." aria-label="Description...S">
+                </td>
+                <td>
+                    <button type="button" class="deleteDetailBtnOnTable btn btn-danger">Delete</button>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
 
-<button id="submitBtnEditPage" class="btn btn-primary mt-3">Submit</button>
+<button id="submitBtn" data-btnType="editBtnSubmit" class="btn btn-primary mt-3">Submit</button>

@@ -4,6 +4,8 @@ let count = 1;
 
 document.querySelector("#addDetailBtn").onclick = () => {
     let div = document.createElement("tr");
+    div.dataset.trid = count;
+
     div.innerHTML = `
         <th>${count++}</th>
         <td>
@@ -40,59 +42,40 @@ let releaseDate
 let shortDescription
 let longDescription
 
-document.querySelector("#submitBtnCreatePage").onclick = function () {
+document.querySelector("#submitBtn").onclick = function (e) {
     getInputValues()
-    submitCreateNewPageFunction()
+
+    if (e.target.dataset.btntype === "createBtnSubmit") {
+        submitFunction("https://localhost:7249/SubmitHeader")
+    } else {
+        submitFunction("https://localhost:7249/SubmitHeader/editAPage")
+    }
 }
 
-document.querySelector("#submitBtnEditPage").onclick = function () {
-    getInputValues();
-    // todo
-    submitEditPageFunction()
-}
-
-// FOR CREATING PAGE
 function getInputValues() {
     // main header
     releaseName = document.querySelector("#ReleaseName").value;
     releaseDate = document.querySelector("#ReleaseDate").value;
     shortDescription = document.querySelector("#ShortDescription").value;
     longDescription = document.querySelector("#LongDescription").value;
-    console.log(longDescription)
+
     // details
-    let checkArray = []
-    document.querySelectorAll(".detailType").forEach((dType, i) => {
-        let addCheck = "";
+    document.querySelectorAll("[data-trid]").forEach(item => {
+        const dType = item.querySelector(".detailType")
+        const dName = item.querySelector(".detailName")
+        const dDescription = item.querySelector(".detailDescription")
 
-        document.querySelectorAll(".detailName").forEach((dName) => {
-
-            document.querySelectorAll(".detailDescription").forEach(dDescription => {
-
-                if (dDescription === "") {
-                    addCheck = `${count}`;
-                } else {
-                    addCheck = dDescription;
-                }
-
-                if (!checkArray.includes(addCheck)) {
-
-                    checkArray.push(dDescription)
-
-                    array.push({
-                        // convert dType aka select to number
-                        type: parseInt(dType.value),
-                        name: dName.value,
-                        description: dDescription.value
-                    })
-                }
-            })
+        array.push({
+            // convert dType aka select to number
+            type: parseInt(dType.options[dType.selectedIndex].value),
+            name: dName.value,
+            description: dDescription.value
         })
     })
 }
 
-async function submitCreateNewPageFunction() {
-    const res = await fetch("https://localhost:7249/SubmitHeader", {
-
+async function submitFunction(URL) {
+    const res = await fetch(URL, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -104,32 +87,8 @@ async function submitCreateNewPageFunction() {
             LongDescription: longDescription,
             Details: array
         })
-        
+
     })
     const data = await res.json();
-    console.log(data);
     window.location.href = "/";
-}
-async function submitEditPageFunction() {
-    // todo fix this
-    /*
-        const res = await fetch("https://localhost:7249/SubmitHeader/editAPage", {
-
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                ReleaseName: releaseName,
-                ReleaseDate: releaseDate,
-                ShortDescription: shortDescription,
-                LongDescription: longDescription,
-                Details: array
-            })
-
-        })
-        const data = await res.json();
-        console.log(data);
-        window.location.href = "/";
-    */
 }

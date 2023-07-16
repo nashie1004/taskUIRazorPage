@@ -21,17 +21,16 @@
                     <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
                         Delete
                     </a>
-                    <a class="btn btn-outline-primary" href="/EditPage">
+                    <a class="btn btn-outline-primary" href="/EditPage/@result.HeaderId">
                         Edit
                     </a>
-                    <a class="btn btn-outline-primary" href="/ReleasePage/1">
+                    <a class="btn btn-outline-primary" href="/ReleasePage/@result.HeaderId">
                         Go to this page
                     </a>
                     <br />
 
                     <h6 class="mt-1">Short Description: @result.ShortDescription</h6>
                     <h6>Long Description: @result.LongDescription</h6>
-                    <a style="text-decoration: none;" href="/ReleasePage/@result.HeaderId">Go to this page</a>
 
                     <br />
                     <h2 class="display-6">Enhancement</h2>
@@ -45,7 +44,6 @@
                             }
                         }
                     </ul>
-                    <br />
                     <br />
                     <h2 class="display-6">Bugs/Fixes</h2>
                     <hr class="hr hr-blurry" />
@@ -77,7 +75,7 @@
                 <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
                     Delete
                 </a>
-                <a class="btn btn-outline-primary" href="/EditPage">
+                <a class="btn btn-outline-primary" href="/EditPage/1">
                     Edit
                 </a>
                 <a class="btn btn-outline-primary" href="/ReleasePage/1">
