@@ -7,16 +7,30 @@ document.querySelector("#addDetailBtn").onclick = () => {
        <tr>
             <th>${count++}</th>
             <td>
-                <input class="detailType form-control form-control-sm" type="number" placeholder="Type..." aria-label="Type...S">
+                <select class="detailType form-select" aria-label="Default select example">
+                  <option selected value="1">1 - Enhancements</option>
+                  <option value="2">2 - Bugs/Fixes</option>
+                </select>
             </td>
             <td>
-                <input class="detailName form-control form-control-sm" type="text" placeholder="Name..." aria-label="Name...S">
+                <input value="Name here #${count - 1}" class="detailName 
+                form-control form-control-sm" type="text" placeholder="Name..." aria-label="Name...S">
             </td>
             <td>
-                <input class="detailDescription form-control form-control-sm" type="text" placeholder="Description..." aria-label="Description...S">
+                <input value="Description here #${count - 1}" 
+                class="detailDescription form-control form-control-sm" type="text" placeholder="Description..." aria-label="Description...S">
+            </td>
+            <td>
+                <button type="button" class="deleteDetailBtnOnTable btn btn-danger">Delete</button>
             </td>
         </tr>
     `
+
+    document.querySelectorAll(".deleteDetailBtnOnTable").forEach(item => {
+        item.addEventListener("click", (e) => {
+            e.target.parentElement.parentElement.remove();
+        })
+    })
 }
 
 let array = [];
@@ -45,7 +59,8 @@ document.querySelector("#submitBtn").onclick = function () {
                     checkArray.push(dDescription)
 
                     array.push({
-                        type: dType.value,
+                        // convert dType aka select to number
+                        type: Number(dType.value),
                         name: dName.value,
                         description: dDescription.value
                     })

@@ -1,11 +1,11 @@
-﻿@page "/CreatePage"
-@model taskui.Pages.CreatePageModel
-
+﻿@page "/EditPage"
+@model taskui.Pages.EditPageModel
 @{
-    ViewData["Title"] = "Create Page";
+    ViewData["Title"] = "Edit Page";
 }
 
-<h1 class="display-5 mt-4">Fill up form</h1>
+<h1 class="display-5 mt-4">Edit</h1>
+
 <div class="form-group mt-3">
     <label for="exampleInputEmail1">Release Name</label>
     <input value="Release name here..." id="ReleaseName" type="text" class="form-control" placeholder="Release Name">
@@ -19,8 +19,8 @@
     <input value="Short description here..." id="ShortDescription" type="text" class="form-control" placeholder="Short Description">
 </div>
 <div class="form-floating mt-4">
-    <textarea textcontent="test value here change this" id="LongDescription" 
-        class="form-control" placeholder="Description here" style="height: 100px"
+    <textarea textcontent="test value here change this" id="LongDescription"
+              class="form-control" placeholder="Description here" style="height: 100px"
     >Long description here...
     </textarea>
     <label for="floatingTextarea2">Long Description</label>

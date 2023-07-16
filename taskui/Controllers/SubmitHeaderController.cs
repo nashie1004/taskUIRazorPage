@@ -10,6 +10,7 @@ namespace taskui.Contoller
     [ApiController]
     public class SubmitHeaderController : Controller
     { 
+        /*
         private readonly IDataAccess dataAccess_;
         public SubmitHeaderController(IDataAccess dataAccess)
         {
@@ -50,6 +51,21 @@ namespace taskui.Contoller
             {
                 return submit;
             }
+        }
+        */
+
+        [HttpGet]
+        [Route("deleteAPage")]
+        public IActionResult DeleteAPage()
+        {
+            return Ok("hi delete page here");
+        }
+
+        [HttpGet]
+        [Route("editAPage")]
+        public IActionResult EditAPage()
+        {
+            return Ok("hi edit page here");
         }
     }
 }

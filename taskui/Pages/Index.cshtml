@@ -4,7 +4,6 @@
 @{
     ViewData["Title"] = "Home page";
 }
-
 <div class="accordion mt-5" id="accordionExample">
 
     @foreach (var result in Model.HeaderList)
@@ -30,7 +29,10 @@
                     <ul>
                         @foreach(var detail in result.Detail)
                         {
-                            <li>@detail.Type - @detail.Name - @detail.Description</li>
+                            if (detail.Type == 1)
+                            {
+                                <li>@detail.Type - @detail.Name - @detail.Description</li>
+                            }
                         }
                     </ul>
                     <br />
@@ -40,13 +42,60 @@
                     <ul>
                         @foreach (var detail in result.Detail)
                         {
-                            <li>@detail.Type - @detail.Name - @detail.Description</li>
+                            if (detail.Type == 2)
+                            {
+                                <li>@detail.Type - @detail.Name - @detail.Description</li>
+                            }
                         }
                     </ul>
 
-                    <button type="button" class="btn btn-outline-primary mx-auto">Print out</button>
+                    <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
+                        Delete
+                    </a>
+                    <a class="btn btn-outline-primary" href="/EditPage">
+                        Edit
+                    </a>
                 </div>
             </div>
         </div>
     }
+
+    <!-- tests -->
+    <div class="accordion-item">
+        <h2 class="accordion-header">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#TEST" aria-expanded="false" aria-controls="TEST">
+                <h1 class="display-5">TEST - TEST</h1>
+            </button>
+        </h2>
+        <div id="TEST" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+
+                <h6>Short Description: TEST</h6>
+                <h6>Long Description: TEST</h6>
+                <a style="text-decoration: none;" href="/ReleasePage/1">Go to this page</a>
+
+                <br />
+                <br />
+                <h2 class="display-6">Enhancement</h2>
+                <hr class="hr hr-blurry" />
+                <ul>
+                    <li>TYPE - NAME - DESCRIPTION</li>
+                </ul>
+                <br />
+                <h2 class="display-6">Bugs/Fixes</h2>
+                <hr class="hr hr-blurry" />
+                <ul>
+                    <li>TYPE - NAME - DESCRIPTION</li>
+                </ul>
+
+                <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage">
+                    Delete
+                </a>
+                <a class="btn btn-outline-primary" href="/EditPage">
+                    Edit
+                </a>
+            </div>
+        </div>
+    </div>
+
 </div>
