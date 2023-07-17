@@ -22,7 +22,6 @@ namespace taskui.Contoller
         {
             try
             {
-                
                 ICollection<Detail> tempDetails = new Collection<Detail>();
 
                 foreach(var item in submit.Details) 
@@ -102,6 +101,33 @@ namespace taskui.Contoller
             } catch (Exception ex) { }
 
             return Redirect("/");
+        }
+
+        [HttpPost]
+        [Route("submitTableView")]
+        public IActionResult TableViewSubmit(SubmitBody dataJSON)
+        {
+            try
+            {
+                dataAccess_.SubmitTableView(dataJSON);
+            } catch (Exception ex) { }
+            return Ok("table view ok");
+        }
+
+        [HttpGet]
+        [Route("DeleteOneDetail/{detailID}")]
+        public IActionResult DeleteOneDetail(int detailID)
+        {
+            dataAccess_.DeleteDetail(detailID);
+            return Redirect("/TableView");
+        }
+
+        [HttpGet]
+        [Route("AddOneDetail/{headerId}")]
+        public IActionResult AddOneDetail(int headerId)
+        {
+            dataAccess_.AddDetail(headerId);
+            return Redirect("/TableView");
         }
     }
 }

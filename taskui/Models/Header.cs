@@ -12,7 +12,7 @@ namespace taskui.Models
 
         public int HeaderId { get; set; }
         public string? ReleaseName { get; set; }
-        public DateTime? ReleaseDate { get; set; }
+        public DateTime ReleaseDate { get; set; }
         public string? ShortDescription { get; set; }
         public string? LongDescription { get; set; }
 

@@ -77,6 +77,29 @@ namespace taskui.Services
             }
             catch (Exception ex) { }
         }
+        public void SubmitTableView(SubmitBody dataJSON)
+        {
+            try
+            {
+                repository_.SubmitTableData(dataJSON);
+            }
+            catch (Exception ex) { }
+        }
+        public void DeleteDetail(int detailID)
+        {
+            try
+            {
+                repository_.DeleteSingleDetail(detailID);
+            } catch (Exception ex) { }
+        }
+        public void AddDetail(int headerId)
+        {
+            try
+            {
+                repository_.AddSingleDetail(headerId);
+            }
+            catch (Exception ex) { }
+        }
     }
 
     public interface IDataAccess
@@ -86,5 +109,8 @@ namespace taskui.Services
         Header? GetOneReleasePage(int id);
         void EditAPage(Header modifyThisHeader);
         void DeleteAPage(int pageId);
+        void SubmitTableView(SubmitBody dataJSON);
+        void DeleteDetail(int detailID);
+        void AddDetail(int headerId);
     }
 }

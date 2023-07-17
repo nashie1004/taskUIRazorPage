@@ -15,21 +15,14 @@ namespace taskui.Pages
         // routing
         [BindProperty(SupportsGet = true)]
         public int pageId { get; set; }
-        public Header DisplayHeader { get; set; }
-        public void OnGet()
+        public Header DisplayHeader { get; set; } = new Header();
+        public async void OnGet()
         {
-            /*
-             
             var result = dataAccess_.GetOneReleasePage(pageId);
-            if (result == null)
-            {
-                //
-            }
-            else
+            if (result != null)
             {
                 DisplayHeader = result;
             }
-             */
         }
     }
 }
