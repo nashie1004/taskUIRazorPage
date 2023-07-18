@@ -1,67 +1,83 @@
-﻿@page
+﻿@page "/"
+@*@page "/{paginationId}"*@
 @using taskui.Models;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
-<div class="accordion mt-5" id="accordionExample">
+<div class="white-bg-container">
 
-    @foreach (var result in Model.HeaderList)
-    {
+    <p class="page-title">
+        View Release
+    </p>
+    <div class="accordion mt-5 " id="accordionExample">
 
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#@result.HeaderId" aria-expanded="false" aria-controls="@result.HeaderId">
-                    <h6 class="display-6">@result.ReleaseName.ToUpper() - @result.ReleaseDate.ToString("yyyy-MM-dd")</h6>
-                </button>
-            </h2>
-            <div id="@result.HeaderId" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
+        @foreach (var result in Model.HeaderList)
+        {
+            string accordionClassName = "";
+            string buttonClassName = "";
+            if (Model.FirstHeader == result.HeaderId)
+            {
+                accordionClassName = "accordion-collapse collapse show";
+                buttonClassName = "accordion-button display-header";
+            }
+            else
+            {
+                accordionClassName = "accordion-collapse collapse";
+                buttonClassName = "accordion-button collapsed display-header";
+            }
 
-                    @*
-                        <a class="btn btn-outline-danger" href="/SubmitHeader/deleteAPage/@result.HeaderId">
-                            Delete
-                        </a>
-                        <a class="btn btn-outline-primary" href="/EditPage/@result.HeaderId">
-                            Edit
-                        </a>
-                        <a class="btn btn-outline-primary" href="/ReleasePage/@result.HeaderId">
-                            Go to this page
-                        </a>
-                        <br />
-                    *@
+            if (result.Detail.Count() != 0)
+            {
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="@buttonClassName" type="button" data-bs-toggle="collapse" data-bs-target="#@result.HeaderId" aria-expanded="false" aria-controls="@result.HeaderId">
+                            <b>@result.ReleaseName.ToUpper()</b>  - @result.ReleaseDate.ToString("yyyy-MM-dd")
+                        </button>
+                    </h2>
+                    <div id="@result.HeaderId" class="@accordionClassName" data-bs-parent="#accordionExample">
+                        <div class="accordion-body">
+                            <p>@result.ShortDescription</p>
+                            <p>@result.LongDescription</p>
 
-                    <h6 class="mt-1">@result.ShortDescription</h6>
-                    <h6>@result.LongDescription</h6>
+                            <br />
+                            <h5>Enhancements</h5>
+                            <hr class="hr hr-blurry" />
+                            <ul class="">
+                                @foreach (var detail in result.Detail)
+                                {
+                                    if (detail.Type == 1)
+                                    {
+                                        <li class="">
+                                            @detail.Name
+                                            <ul>
+                                                <li>Description 1</li>
+                                            </ul>
+                                        </li>
+                                    }
+                                }
+                            </ul>
 
-                    <br />
-                    <h2 class="display-6 text-warning-emphasis">Enhancement</h2>
-                    <hr class="hr hr-blurry" />
-                    <ul>
-                        @foreach(var detail in result.Detail)
-                        {
-                            if (detail.Type == 1)
-                            {
-                                <li>@detail.Name - @detail.Description</li>
-                            }
-                        }
-                    </ul>
-                    <br />
-                    <h2 class="display-6 text-danger">Bugs/Fixes</h2>
-                    <hr class="hr hr-blurry" />
-                    <ul>
-                        @foreach (var detail in result.Detail)
-                        {
-                            if (detail.Type == 2)
-                            {
-                                <li>@detail.Type - @detail.Name - @detail.Description</li>
-                            }
-                        }
-                    </ul>
+                            <br />
+                            <h5>Bugs/Fixes</h5>
+                            <hr class="hr hr-blurry" />
+                            <ul class="">
+                                @foreach (var detail in result.Detail)
+                                {
+                                    if (detail.Type == 2)
+                                    {
+                                        <li class="">
+                                            @detail.Name 
+                                        </li>
+                                    }
+                                }
+                            </ul>
 
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    }
+            }
 
+        }
+    </div>
 </div>

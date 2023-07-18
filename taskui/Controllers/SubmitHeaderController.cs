@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using System.Collections.ObjectModel;
 using taskui.Models;
 using taskui.Services;
+using IronPdf;
 
 namespace taskui.Contoller
 {
@@ -64,43 +66,7 @@ namespace taskui.Contoller
                 dataAccess_.DeleteAPage(pageId);
             } catch (Exception ex) { }
 
-            return Redirect("/");
-        }
-
-        [HttpPost]
-        [Route("editAPage")]
-        public IActionResult EditAPage([FromBody] SubmitHeader submit)
-        {
-            try
-            {
-                ICollection<Detail> tempDetails = new Collection<Detail>();
-                
-                foreach(var item in submit.Details)
-                {
-                    tempDetails.Add(
-                        new Detail()
-                        {
-                            Type = item.Type,
-                            Name = item.Name,
-                            Description = item.Description,
-                        }
-                    );
-                }
-
-                Header header = new Header()
-                {
-                    ReleaseName = submit.ReleaseName,
-                    ReleaseDate = submit.ReleaseDate,
-                    ShortDescription = submit.ShortDescription,
-                    LongDescription = submit.LongDescription,
-                    Detail = tempDetails
-                };
-
-                dataAccess_.EditAPage(header);
-                return Redirect("/");
-            } catch (Exception ex) { }
-
-            return Redirect("/");
+            return Redirect("/Edit");
         }
 
         [HttpPost]
@@ -119,7 +85,7 @@ namespace taskui.Contoller
         public IActionResult DeleteOneDetail(int detailID)
         {
             dataAccess_.DeleteDetail(detailID);
-            return Redirect("/TableView");
+            return Redirect("/Edit");
         }
 
         [HttpGet]
@@ -127,7 +93,18 @@ namespace taskui.Contoller
         public IActionResult AddOneDetail(int headerId)
         {
             dataAccess_.AddDetail(headerId);
-            return Redirect("/TableView");
+            return Redirect("/Edit");
+        }
+
+        [HttpGet]
+        [Route("Print")]
+        public IActionResult Print(int headerId = 10)
+        {
+            var render = new ChromePdfRenderer();
+            var pdf = render.RenderHtmlAsPdf("<h1>Hello World</h1> first pdf");
+            pdf.SaveAs("htmlPDF.pdf");
+
+            return Redirect("/");
         }
     }
 }

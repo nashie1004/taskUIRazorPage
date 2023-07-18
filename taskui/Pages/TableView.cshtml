@@ -1,109 +1,117 @@
-﻿@page "/TableView"
+﻿@page "/Edit"
 @model taskui.Pages.TableViewModel
 @{
-    ViewData["Title"] = "Table page";
+    ViewData["Title"] = "Edit page";
 }
-<h6 class="display-6 mt-4">Edit Table</h6>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Release Name</th>
-            <th scope="col">Release Date</th>
-            <th scope="col">Short Description</th>
-            <th scope="col">Long Description</th>
-            <th scope="col">DetailId</th>
-            <th scope="col">Type</th>
-            <th scope="col">Name</th>
-            <th scope="col">Description</th>
-            <th scope="col"></th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var header in Model.HeaderList)
-        {
-            bool checkIfFirst = true;
-            foreach(var detail in header.Detail)
-            {
-                string releaseNameClassName = $"trReleaseNameMain{header.HeaderId} form-control form-control-sm";
-                string releaseDateClassName = $"trReleaseDateMain{header.HeaderId} form-control form-control-sm";
-                string shortDescriptionClassName = $"trShortDescriptionMain{header.HeaderId} form-control form-control-sm";
-                string longDescriptionClassName = $"trLongDescriptionMain{header.HeaderId} form-control";
-                @**@
-                <tr class="headerTr">
-                    <td class="trHeaderId">@header.HeaderId</td>
-                    <td class="">
-                        @if (checkIfFirst)
-                        {
-                            <input value="@header.ReleaseName" class="@releaseNameClassName" type="text" placeholder="Name..." />
-                        }
-                    </td>
-                    <td class="">
-                        @if (checkIfFirst)
-                        {
-                            <input value="@header.ReleaseDate.ToString("yyyy-MM-dd")" class="@releaseDateClassName" type="date" placeholder="Date..." />
-                        }
-                    </td>
-                    <td class="">
-                        @if (checkIfFirst)
-                        {
-                            <input value="@header.ShortDescription" class="@shortDescriptionClassName" type="text" placeholder="Description..." />
-                        }
-                    </td>
-                    <td class="">
-                        @if (checkIfFirst)
-                        {
-                            <textarea class="@longDescriptionClassName" placeholder="Long Description here..." id="floatingTextarea">@header.LongDescription</textarea>
-                            @*
+<div class="white-bg-container">
 
-                            <input value="@header.LongDescription" class="@longDescriptionClassName" type="text" placeholder="Description..." />
-                            *@
-                        }
-                    </td>
-                    <td class="trDetailId">@detail.DetailId</td>
-                    <td class="">
-                        <select class="trType detailType form-select" aria-label="Default select example">
-                            @if (detail.Type == 1)
+    <p class="page-title">
+        Edit Table
+    </p>
+
+    <table class="table table-hover ">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Release Name</th>
+                <th scope="col">Release Date</th>
+                <th scope="col">Short Description</th>
+                <th scope="col" class="long-description-col">Long Description</th>
+                <th scope="col">DetailId</th>
+                <th scope="col">Type</th>
+                <th scope="col">Name</th>
+                <th scope="col">Description</th>
+                <th scope="col"></th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var header in Model.HeaderList)
+            {
+                bool checkIfFirst = true;
+                foreach(var detail in header.Detail)
+                {
+                    string releaseNameClassName = $"trReleaseNameMain{header.HeaderId} form-control form-control-sm";
+                    string releaseDateClassName = $"trReleaseDateMain{header.HeaderId} form-control form-control-sm";
+                    string shortDescriptionClassName = $"trShortDescriptionMain{header.HeaderId} form-control form-control-sm";
+                    string longDescriptionClassName = $"trLongDescriptionMain{header.HeaderId} form-control";
+                    <tr class="headerTr">
+                        <td class="trHeaderId ">@header.HeaderId</td>
+                        <td class="">
+                            @if (checkIfFirst)
                             {
-                                <option selected value="1">1 - Enhancements</option>
-                                <option value="2">2 - Bugs/Fixes</option>
+                                <input value="@header.ReleaseName" class="@releaseNameClassName" type="text" placeholder="Name..." />
+                            }
+                        </td>
+                        <td class="">
+                            @if (checkIfFirst)
+                            {
+                                <input value="@header.ReleaseDate.ToString("yyyy-MM-dd")" class="@releaseDateClassName" type="date" placeholder="Date..." />
+                            }
+                        </td>
+                        <td class="">
+                            @if (checkIfFirst)
+                            {
+                                <input value="@header.ShortDescription" class="@shortDescriptionClassName" type="text" placeholder="Description..." />
+                            }
+                        </td>
+                        <td class="long-col">
+                            @if (checkIfFirst)
+                            {
+                                <textarea class="@longDescriptionClassName" placeholder="Long Description here..." id="floatingTextarea">@header.LongDescription</textarea>
+                                @*
+
+                                <input value="@header.LongDescription" class="@longDescriptionClassName" type="text" placeholder="Description..." />
+                                *@
+                            }
+                        </td>
+                        <td class="trDetailId">@detail.DetailId</td>
+                        <td class="">
+                            <select class="trType detailType form-select" aria-label="Default select example">
+                                @if (detail.Type == 1)
+                                {
+                                    <option selected value="1">1 - Enhancements</option>
+                                    <option value="2">2 - Bugs/Fixes</option>
+                                } else
+                                {
+                                    <option value="1">1 - Enhancements</option>
+                                    <option selected value="2">2 - Bugs/Fixes</option>
+                                }
+                            </select>
+                        </td>
+                        <td class="">
+                            <input value="@detail.Name" class="trName detailName form-control form-control-sm" type="text" placeholder="Name..." />
+                        </td>
+                        <td class="">
+                            @*
+                            <textarea value="@detail.Description" placeholder="Description here..."></textarea>
+                            *@
+                            <input value="@detail.Description" class="trDesc detailName form-control form-control-sm" type="text" placeholder="Description..." />
+                        </td>
+                        <td class="">
+                            @if (header.Detail.Count() != 1)
+                            {
+                                <a class="btn btn-danger deleteDetailBtnOnTable" 
+                                href="/SubmitHeader/DeleteOneDetail/@detail.DetailId">Delete</a>
                             } else
                             {
-                                <option value="1">1 - Enhancements</option>
-                                <option selected value="2">2 - Bugs/Fixes</option>
+                                <a class="btn btn-danger deleteDetailBtnOnTable"
+                                   href="/SubmitHeader/deleteAPage/@header.HeaderId">Delete</a>
                             }
-                        </select>
-                    </td>
-                    <td class="">
-                        <input value="@detail.Name" class="trName detailName form-control form-control-sm" type="text" placeholder="Name..." />
-                    </td>
-                    <td class="">
-                        <input value="@detail.Description" class="trDesc detailName form-control form-control-sm" type="text" placeholder="Description..." />
-                    </td>
-                    <td class="">
-                        @if (header.Detail.Count() != 1)
-                        {
-                            <a class="btn btn-danger deleteDetailBtnOnTable" 
-                            href="/SubmitHeader/DeleteOneDetail/@detail.DetailId">Delete</a>
-                        } else
-                        {
-                            <a class="btn btn-danger deleteDetailBtnOnTable"
-                               href="/SubmitHeader/deleteAPage/@header.HeaderId">Delete</a>
-                        }
-                    </td>
-                    <td>
-                        @if (checkIfFirst)
-                        {
-                            <a class="btn btn-secondary deleteDetailBtnOnTable"
-                               href="/SubmitHeader/AddOneDetail/@header.HeaderId">Add</a>
-                        }
-                    </td>
-                </tr>
-                checkIfFirst = false;
+                        </td>
+                        <td>
+                            @if (checkIfFirst)
+                            {
+                                <a class="btn btn-secondary deleteDetailBtnOnTable"
+                                   href="/SubmitHeader/AddOneDetail/@header.HeaderId">Add</a>
+                            }
+                        </td>
+                    </tr>
+                    checkIfFirst = false;
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
 
-<button id="submitBtn" data-btnType="submitTableView" class="btn btn-primary mt-3">Save</button>
+    <button id="submitBtn" data-btnType="submitTableView" class="btn btn-primary mt-3">Save</button>
+</div>

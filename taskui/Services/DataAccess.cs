@@ -16,7 +16,6 @@ namespace taskui.Services
             var retValue = new List<Header>();
             try
             {
-                //retValue = await repository_.GetList<Header>();
                 var header = await repository_.GetList<Header>();
                 var detail = await repository_.GetList<Detail>();
 
@@ -46,28 +45,6 @@ namespace taskui.Services
             }
 
             return;
-        }
-
-        public Header? GetOneReleasePage(int pageId)
-        {
-            Header? result = null;
-            try
-            {
-                return result = repository_.GetPageInfo(pageId);
-            } 
-            catch (Exception ex) 
-            {
-                return result;   
-            }
-        }
-
-        public void EditAPage(Header modifyThisHeader)
-        {
-            try
-            {
-                repository_.EditPage(modifyThisHeader);
-            }
-            catch (Exception ex) { }
         }
         public void DeleteAPage(int pageId)
         {
@@ -106,8 +83,6 @@ namespace taskui.Services
     {
         Task<List<Header>> GetHeaderList();
         Task SubmitForm(Header submitHeader);
-        Header? GetOneReleasePage(int id);
-        void EditAPage(Header modifyThisHeader);
         void DeleteAPage(int pageId);
         void SubmitTableView(SubmitBody dataJSON);
         void DeleteDetail(int detailID);

@@ -18,5 +18,43 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background: #ecf0f1 !important;
+}
+.display-header {
+    font-size: 1.2rem;
+}
+.page-title {
+    font-size: 2rem;
+    text-align: center;
+    margin-top: 1.5rem;
+}
+.white-bg-container {
+    background: white !important;
+    padding: 1rem;
+    margin-top: 2.8rem;
+}
+.long-col{
+    min-width: 200px;
+}
+.accordion-details{
+    text-align: left !important;
+}
+.custom-badge {
+    background: #27ae60;
+    color: white;
+    font-size: 1.1rem;
+    border-radius: .6rem;
+    padding: .4rem .6rem;
+}
+.bugs-badge {
+    background: #e74c3c;
+}
+.list-detail {
+    background: #ecf0f1 !important;
+    padding: .7rem;
+    font-weight: 400;
+}
+li{
+    margin-top: .6rem;
 }

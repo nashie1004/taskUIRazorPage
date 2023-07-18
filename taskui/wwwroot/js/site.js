@@ -1,4 +1,14 @@
-﻿// VALUES (TO ADD)
+﻿
+var divContents = $("#dvContainer").html();
+var printWindow = window.open('', '', 'height=400,width=800');
+printWindow.document.write('<html><head><title>DIV Contents</title>');
+printWindow.document.write('</head><body >');
+printWindow.document.write(divContents);
+printWindow.document.write('</body></html>');
+printWindow.document.close();
+printWindow.print();
+
+// VALUES (TO ADD)
 let count = 1;
 
 // edit page not showing this so add now
@@ -8,7 +18,7 @@ document.querySelectorAll(".deleteDetailBtnOnTable").forEach(item => {
     })
 })
 
-if (window.location.href == "https://localhost:7249/CreatePage"){
+if (window.location.href == "https://localhost:7249/Create" || window.location.href == "https://localhost:7249/create") {
     document.querySelector("#addDetailBtn").onclick = () => {
         let div = document.createElement("tr");
         div.dataset.trid = count;
@@ -52,7 +62,6 @@ let longDescription
 
 
 document.querySelector("#submitBtn").onclick = function (e) {
-
     if (e.target.dataset.btntype === "createBtnSubmit") {
         getInputValues()
         submitFunction("https://localhost:7249/SubmitHeader")
@@ -153,3 +162,4 @@ function tableViewSubmit() {
         window.location.href = "/";
     }
 }
+

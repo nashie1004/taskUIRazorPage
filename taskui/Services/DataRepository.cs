@@ -85,54 +85,6 @@ namespace taskui.Services
             { }
             return;
         }
-        public Header? GetPageInfo(int pageId)
-        {
-            Header? result = context_.Header.FirstOrDefault(w => w.HeaderId == pageId);
-            if (result != null)
-            {
-                var allDetails = context_.Detail.ToList();
-                var foundItemDetail = allDetails.Where(item => item.HeaderId == pageId).ToList();
-
-                result.Detail = foundItemDetail;
-            }
-            return result;
-        }
-        public void EditPage(Header modifyThisHeader)
-        {
-            try
-            {
-                // fix this - use uuid to find element
-                var found = context_.Header
-                    .FirstOrDefault(item => item.ReleaseName == modifyThisHeader.ReleaseName);
-                
-                if (found != null)
-                {
-                    found.ReleaseName = modifyThisHeader.ReleaseName;
-                    found.ReleaseDate = modifyThisHeader.ReleaseDate;
-                    found.ShortDescription = modifyThisHeader.ShortDescription;
-                    found.LongDescription = modifyThisHeader.LongDescription;
-                    //found.Detail = modifyThisHeader.Detail;
-                    
-                    var allDetails = context_.Detail.ToList();
-                    foreach (var toAddDetail in modifyThisHeader.Detail)
-                    {
-                        if (allDetails.Any(i => i.DetailId == toAddDetail.DetailId))
-                        {
-                            allDetails.Remove(toAddDetail);
-                            allDetails.Add(toAddDetail);
-                        } else
-                        {
-                            allDetails.Add(toAddDetail);
-                        }
-                    }
-                     
-
-                    context_.SaveChanges();
-                }
-                
-
-            } catch (Exception ex) { }
-        }
         public void DeletePage(int pageId)
         {
             try
@@ -225,8 +177,6 @@ namespace taskui.Services
         Task<TT> UpdateRecord<TT>(TT model) where TT : class, new();
 
         Task SubmitAHeader(Header submitHeader);
-        Header? GetPageInfo(int pageId);
-        void EditPage(Header modifyThisHeader);
         void DeletePage(int pageId);
         void SubmitTableData(SubmitBody data);
         void DeleteSingleDetail(int detailID);
