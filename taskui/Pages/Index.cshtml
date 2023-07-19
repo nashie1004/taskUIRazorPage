@@ -1,10 +1,50 @@
 ﻿@page "/"
-@*@page "/{paginationId}"*@
 @using taskui.Models;
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
 }
+@*
+    @section ControlsSection{
+        <div class="control-section">
+            test
+            <div class="control-wrapper">
+                <ejs-richtexteditor id="default">
+                    <e-content-template>
+                        <div>
+                            <p>The Rich Text Editor component is a WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content. Users can format their content using standard toolbar commands.</p>
+                            <p><b> Key features:</b></p>
+                            <ul>
+                                <li><p> Provides IFRAME and DIV modes </p></li>
+                                <li><p> Capable of handling markdown editing.</p></li>
+                                <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
+                                <li><p> Provides a fully customizable toolbar.</p></li>
+                                <li><p> Provides HTML view to edit the source directly for developers.</p></li>
+                                <li><p> Supports third - party library integration.</p></li>
+                                <li><p> Allows a preview of modified content before saving it.</p></li>
+                                <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
+                                <li><p> Contains undo / redo manager.</p></li>
+                                <li><p> Creates bulleted and numbered lists.</p></li>
+                            </ul>
+                        </div>
+                    </e-content-template>
+                </ejs-richtexteditor>
+            </div>
+        </div>
+    }
+
+*@
+@**@
+@using Syncfusion.EJ2.RichTextEditor
+@*<ejs-richtexteditor id="default" >
+    <e-imageSettings saveFormat="SaveFormat.Base64"></e-imageSettings>
+
+</ejs-richtexteditor>*@
+
+<EjsRichTextEditor TValue="string" id="richTextEditor" Height="300px">
+    <RichTextEditorImageSettings SaveFormat="SaveFormat.Base64"></RichTextEditorImageSettings>
+</EjsRichTextEditor>
+<button class="test" id="btntest">click</button>
 <div class="white-bg-container">
 
     <p class="page-title">
@@ -27,7 +67,7 @@
                 buttonClassName = "accordion-button collapsed display-header";
             }
 
-            if (result.Detail.Count() != 0)
+            @if (result.Detail.Count() != 0) //result.Detail.Count() != 0)
             {
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -37,47 +77,110 @@
                     </h2>
                     <div id="@result.HeaderId" class="@accordionClassName" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <p>@result.ShortDescription</p>
-                            <p>@result.LongDescription</p>
+                            <div class="print-@result.HeaderId">
+                                <p>@result.ShortDescription</p>
+                                <p>@result.LongDescription</p>
 
-                            <br />
-                            <h5>Enhancements</h5>
-                            <hr class="hr hr-blurry" />
-                            <ul class="">
-                                @foreach (var detail in result.Detail)
-                                {
-                                    if (detail.Type == 1)
+                                <br />
+                                <h5 class="text-success">Enhancements</h5>
+                                <hr class="hr hr-blurry" />
+                                <ul class="">
+                                    @foreach (var detail in result.Detail)
                                     {
-                                        <li class="">
-                                            @detail.Name
-                                            <ul>
-                                                <li>Description 1</li>
-                                            </ul>
-                                        </li>
+                                        if (detail.Type == 1)
+                                        {
+                                            <li class="">
+                                                @detail.Name
+                                                <div class="detail-description">
+                                                    &#8226; @detail.Description
+                                                </div>
+                                            </li>
+                                        }
                                     }
-                                }
-                            </ul>
+                                </ul>
 
-                            <br />
-                            <h5>Bugs/Fixes</h5>
-                            <hr class="hr hr-blurry" />
-                            <ul class="">
-                                @foreach (var detail in result.Detail)
-                                {
-                                    if (detail.Type == 2)
+                                <br />
+                                <h5 class="text-danger">Bugs/Fixes</h5>
+                                <hr class="hr hr-blurry" />
+                                <ul class="">
+                                    @foreach (var detail in result.Detail)
                                     {
-                                        <li class="">
-                                            @detail.Name 
-                                        </li>
+                                        if (detail.Type == 2)
+                                        {
+                                            <li class="">
+                                                @detail.Name 
+                                                <div class="detail-description">
+                                                    &#8226; @detail.Description
+                                                </div>
+                                            </li>
+                                        }
                                     }
-                                }
-                            </ul>
+                                </ul>
+                            </div>
+                            
+                            <button data-pdfPrintReleaseDate="@result.ReleaseDate.ToString("yyyy-MM-dd")"
+                                    data-pdfPrintID="@result.HeaderId"
+                                    data-pdfPrintReleaseName="@result.ReleaseName"
+                                    class="jsPDF-btn btn btn-outline-primary">
+                                Download PDF
+                            </button>
 
                         </div>
                     </div>
                 </div>
             }
-
         }
     </div>
 </div>
+@section scripts{
+    <script>
+
+        document.querySelectorAll(".jsPDF-btn").forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                // get btn details
+                const element = document.querySelector(`.print-${btn.dataset.pdfprintid}`);
+
+                const div = document.createElement("div")
+
+                div.innerHTML = `
+                            <h2 class="accordion-header mb-1">
+                                        ${btn.dataset.pdfprintreleasename} - ${btn.dataset.pdfprintreleasedate}
+                            </h2>
+                            ${element.innerHTML}
+                        `
+
+                //print pdf
+                window.jsPDF = window.jspdf.jsPDF;
+
+                const doc = new jsPDF()
+
+                doc.html(div, {
+                    callback: function (doc) {
+                        // Save the PDF
+                        doc.save(`${btn.dataset.pdfprintreleasename.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g, "")}`);
+                    },
+                    margin: [10, 10, 10, 10],
+                    autoPaging: 'text',
+                    x: 0,
+                    y: 0,
+                    width: 190, //target width in the PDF document
+                    windowWidth: 675 //window width in CSS pixels
+                });
+
+
+            })
+        })
+
+        //
+
+        document.getElementById('btntest').onclick = function () {
+            var rte = document.getElementById("richTextEditor").ej2_instances[0];
+            var content = rte.contentModule.getEditPanel().innerHTML;
+
+            console.log(content)
+        }
+
+    </script>
+}
+
+<ejs-scripts></ejs-scripts>

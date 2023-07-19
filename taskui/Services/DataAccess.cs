@@ -31,13 +31,13 @@ namespace taskui.Services
             return retValue;
         }
 
-        public async Task SubmitForm(Header submitHeader)
+        public void SubmitForm(Header submitHeader)
         {
             List<Header> value = new List<Header>();
 
             try
             {
-                await repository_.SubmitAHeader(submitHeader);
+                repository_.SubmitAHeader(submitHeader);
             } 
             catch(Exception ex)
             {
@@ -82,7 +82,7 @@ namespace taskui.Services
     public interface IDataAccess
     {
         Task<List<Header>> GetHeaderList();
-        Task SubmitForm(Header submitHeader);
+        void SubmitForm(Header submitHeader);
         void DeleteAPage(int pageId);
         void SubmitTableView(SubmitBody dataJSON);
         void DeleteDetail(int detailID);

@@ -18,7 +18,10 @@ namespace taskui.Pages
 
         public async Task OnGet()
         {
-            HeaderList = await dataAccess_.GetHeaderList();
+            var tempHeader = await dataAccess_.GetHeaderList();
+            HeaderList = tempHeader.OrderBy(item => item.ReleaseDate).Reverse().ToList();
+
+            //await Console.Out.WriteLineAsync($"\n editCount: {HeaderList.Count()}\n");
         }
     }
 }

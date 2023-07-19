@@ -5,10 +5,11 @@ using taskui.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2VVhjQlFac1dJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRd0djXX1ecXFRQGFdWUM=");
+
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddControllers();
-
 
 #if DEBUG
 var connectionString = "DefaultConnection";
@@ -27,7 +28,6 @@ builder.Services.AddDbContext<ReleaseNoteContext>(options =>
 
 builder.Services.AddScoped<IDataRepository, DataRepository>();
 builder.Services.AddScoped<IDataAccess, DataAccess>();
-
 
 var app = builder.Build();
 

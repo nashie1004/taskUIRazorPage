@@ -24,8 +24,7 @@ namespace taskui.Pages
         public async Task OnGet()
         {
             var tempHeader = await dataAccess_.GetHeaderList();
-            var tempList = tempHeader.OrderBy(item => item.ReleaseDate).
-                ToList();
+            var tempList = tempHeader.OrderBy(item => item.ReleaseDate).Reverse().ToList();
 
             paginationId = paginationId * 5;
             if (paginationId == 0)
@@ -33,14 +32,21 @@ namespace taskui.Pages
                 //paginationId = 1;
             }
 
-            HeaderList = tempList; //.GetRange(paginationId, 10);
+            HeaderList = tempList; 
+
+            // testing pagination
+            try
+            {
+                //var result = tempList.GetRange(5, 5);
+                //await Console.Out.WriteLineAsync($"{result.Count()}");
+            } catch (Exception ex) { await Console.Out.WriteLineAsync($"error TC {ex}"); }
+            //await Console.Out.WriteLineAsync($"headerCount: {HeaderList.Count()}");
 
             if (HeaderList.Count != 0)
             {
-                var firstItem = HeaderList.OrderBy(item => item.ReleaseDate).First(); 
+                var firstItem = HeaderList.OrderBy(item => item.ReleaseDate).Reverse().First(); 
                 FirstHeader = firstItem.HeaderId;
             }
-
         }
     }
 }

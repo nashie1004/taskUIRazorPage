@@ -17,18 +17,18 @@ namespace taskui.Pages
         {
         }
 
-        // redo this
-        public async Task<IActionResult> OnPost(Header data) 
+        /* redo this *
+        public IActionResult OnPost(Header data) 
         {
             try
             {
-                await dataAccess_.SubmitForm(data);
+                dataAccess_.SubmitForm(data);
             } 
             catch (Exception ex)
             {
-                //
+                
             }
             return Redirect("/");
-        }
+        }*/
     }
 }
