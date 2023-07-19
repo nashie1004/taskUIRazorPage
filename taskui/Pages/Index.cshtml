@@ -3,6 +3,8 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+
+    string htmlString = "<h1><strong><em><span style='text-decoration: underline;'>aasdasdasd</span></em></strong>";
 }
 @*
     @section ControlsSection{
@@ -32,18 +34,11 @@
             </div>
         </div>
     }
-
 *@
-@**@
 @using Syncfusion.EJ2.RichTextEditor
-@*<ejs-richtexteditor id="default" >
-    <e-imageSettings saveFormat="SaveFormat.Base64"></e-imageSettings>
+<ejs-richtexteditor id="default" value="@htmlString">
+</ejs-richtexteditor>
 
-</ejs-richtexteditor>*@
-
-<EjsRichTextEditor TValue="string" id="richTextEditor" Height="300px">
-    <RichTextEditorImageSettings SaveFormat="SaveFormat.Base64"></RichTextEditorImageSettings>
-</EjsRichTextEditor>
 <button class="test" id="btntest">click</button>
 <div class="white-bg-container">
 
@@ -174,10 +169,59 @@
         //
 
         document.getElementById('btntest').onclick = function () {
-            var rte = document.getElementById("richTextEditor").ej2_instances[0];
-            var content = rte.contentModule.getEditPanel().innerHTML;
+            // Get the Rich Text Editor instance
+            var rte = document.getElementById("default").ej2_instances[0];
 
-            console.log(content)
+            // Get the content from the Rich Text Editor
+            var content = rte.value;
+
+            // Find all image elements in the content
+            var images = rte.element.querySelectorAll("img");
+
+            // Asynchronously convert each image to Base64
+            Promise.all(Array.from(images).map(async function (image) {
+                var base64 = await getBase64FromImageUrl(image.src);
+                content = content.replace(image.src, base64);
+
+                console.log(content);
+            })).then(function () {
+                // Now you have the content with images in Base64 format
+                // You can submit the 'content' variable to the server using AJAX or other methods.
+                // For example, you can use jQuery AJAX to send the content to the server:
+                /*
+                $.ajax({
+                    type: "POST",
+                    url: "/YourController/YourAction",
+                    data: { content: content },
+                    success: function (result) {
+                        // Handle the success response from the server
+                    },
+                    error: function (error) {
+                        // Handle the error response from the server
+                    }
+                });
+                */
+            });
+
+            function getBase64FromImageUrl(url) {
+                return new Promise(function (resolve, reject) {
+                    var img = new Image();
+                    img.crossOrigin = "Anonymous";
+                    img.onload = function () {
+                        var canvas = document.createElement("canvas");
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        var ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, img.width, img.height);
+                        var base64 = canvas.toDataURL("image/png"); // You can also use "image/jpeg" for JPEG format
+                        resolve(base64);
+                    };
+                    img.onerror = function () {
+                        reject(new Error("Failed to load image"));
+                    };
+                    img.src = url;
+                });
+            }
         }
 
     </script>

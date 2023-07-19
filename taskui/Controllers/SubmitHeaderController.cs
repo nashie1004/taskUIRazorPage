@@ -96,40 +96,5 @@ namespace taskui.Contoller
             dataAccess_.AddDetail(headerId);
             return Redirect("/Edit");
         }
-
-        [HttpPost]
-        [Route("base64")]
-        public IActionResult UploadImage()
-        {
-            try
-            {
-                var files = Request.Form.Files;
-                if (files != null && files.Count > 0)
-                {
-                    var imageUrls = new List<string>();
-
-                    foreach (var imageFile in files)
-                    {
-                        using (MemoryStream ms = new MemoryStream())
-                        {
-                            imageFile.CopyTo(ms);
-                            byte[] imageBytes = ms.ToArray();
-                            string base64String = Convert.ToBase64String(imageBytes);
-
-                            // Save the base64String to a database or a file as per your requirements.// Return the image URL to the editor. The URL should be an endpoint that can serve the image// when the editor needs to display it.string imageUrl = "path_to_serve_image_from_base64"; // Replace with the appropriate URL.
-                            //imageUrls.Add(imageUrl);
-                        }
-                    }
-
-                    return Json(new { urls = imageUrls });
-                }
-            }
-            catch (Exception ex)
-            {
-                // Handle exception as per your application requirements.
-            }
-
-            return BadRequest();
-        }
     }
 }
