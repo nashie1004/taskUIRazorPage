@@ -20,7 +20,6 @@ let shortDescription
 let longDescription
 
 if (window.location.href.toUpperCase() != baseURL.toUpperCase()) {
-
     document.querySelector("#submitBtn").onclick = function (e) {
         if (e.target.dataset.btntype === "createBtnSubmit") {
             getInputValues()
@@ -31,7 +30,7 @@ if (window.location.href.toUpperCase() != baseURL.toUpperCase()) {
     }
 }
 
-
+// for create page
 function getInputValues() {
     // main header
     releaseName = document.querySelector("#ReleaseName").value;
@@ -147,8 +146,93 @@ async function submitFunction(URL) {
 
 // for edit page
 function tableViewSubmit() {
-
     const submitArray = []
+    let detailIncrement = 1;
+    document.querySelectorAll(".table-list-container").forEach(list => {
+        const releaseHeaderID = list.querySelector(".list-releaseHeaderID").textContent
+        const releaseName = list.querySelector(".list-releaseName").value
+        const releaseDate = list.querySelector(".list-releaseDate").value
+        const releaseShortDescription = list.querySelector(".list-releaseShortDescription").value
+        const releaseLongDescription = list.querySelector(".list-releaseLongDescription").value
+
+        list.querySelectorAll(".list-detailContainer").forEach(detailInList => {
+
+            const detailID = detailInList.querySelector(".list-detail-detailID").textContent;
+            const detailName = detailInList.querySelector(".list-detail-detailName").value;
+            const detailType = detailInList.querySelector(".list-detail-detailType").value;
+
+            console.log('\ndataset here: ', releaseName, detailID)
+            
+
+            //console.log(detailInList, document.querySelector(`#defaultRTE-${detailIncrement++}`))
+            const rte = document.querySelector(`#defaultRTE-${detailIncrement++}`).ej2_instances[0]
+
+            let content = rte.value;
+
+            var images = rte.element.querySelectorAll("img");
+
+            if (images.length == 0) {
+                content = content.toString();
+
+                submitArray.push({
+                    HeaderId: releaseHeaderID,
+                    ReleaseNameTable: releaseName,
+                    ReleaseDateTable: releaseDate,
+                    ShortDescription: releaseShortDescription,
+                    LongDescription: releaseLongDescription,
+                    DetailId: detailID,
+                    DetailTypeTable: Number(parseInt(detailType)),
+                    DetailNameTable: detailName,
+                    DetailDescriptionTable: content
+                })
+
+                console.log('submit array: ', submitArray)
+            } else {
+                Array.from(images).map(async function (image) {
+                    var base64 = await getBase64FromImageUrl(image.src);
+                    content = content.replace(image.src, base64).toString();
+
+                    submitArray.push({
+                        HeaderId: releaseHeaderID,
+                        ReleaseNameTable: releaseName,
+                        ReleaseDateTable: releaseDate,
+                        ShortDescription: releaseShortDescription,
+                        LongDescription: releaseLongDescription,
+                        DetailId: detailID,
+                        DetailTypeTable: Number(parseInt(detailType)),
+                        DetailNameTable: detailName,
+                        DetailDescriptionTable: content
+                    })
+
+                    console.log('submit array: ', submitArray)
+                })
+            }
+
+            function getBase64FromImageUrl(url) {
+            return new Promise(function (resolve, reject) {
+                var img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = function () {
+                    var canvas = document.createElement("canvas");
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    var ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, img.width, img.height);
+                    var base64 = canvas.toDataURL("image/png"); // You can also use "image/jpeg" for JPEG format
+                    resolve(base64);
+                };
+                img.onerror = function () {
+                    reject(new Error("Failed to load image"));
+                };
+                img.src = url;
+            });
+            }
+            
+
+        })
+    })
+
+    /*
     document.querySelectorAll(".headerTr").forEach(tr => {
         let headerId = tr.querySelector(".trHeaderId").textContent
         let releaseNameTable = document.querySelector(`.trReleaseNameMain${headerId}`).value
@@ -172,9 +256,10 @@ function tableViewSubmit() {
             DetailNameTable: detailNameTable,
             DetailDescriptionTable: detailDescriptionTable
         })
-    })
+    })*/
 
     submitTable(submitTableViewURL);
+
     async function submitTable(URL) {
         const res = await fetch(URL, {
             method: "POST",
@@ -186,8 +271,8 @@ function tableViewSubmit() {
             })
         })
 
-        window.location.href = "/";
+        //window.location.href = "/";
     }
-    alert('submitted')
+    alert('Edited success')
 }
 

@@ -14,23 +14,28 @@
     <ul class="list-group mb-4">
         @foreach (var header in Model.HeaderList)
         {
-            <li class="list-group-item p-3">
+            int detailCount = 1;
+
+            <li class="list-group-item p-3 table-list-container">
+                <h6 class="list-releaseHeaderID">@header.HeaderId</h6>
                 <p class="h4 mb-3">@header.ReleaseName</p>
 
                 <p>
-                    <button type="button" class="btn btn-secondary">Add detail</button>
-                    <button data-bs-target="#@header.HeaderId" class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
-                        Hide Details
-                    </button>
+                    <a type="button" class="btn btn-secondary" href="/SubmitHeader/AddOneDetail/@header.HeaderId">Add detail</a>
+                    @*
+                        <button data-bs-target="#@header.HeaderId" class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                            Hide Details
+                        </button>
+                    *@
                 </p>
 
                 <div class="input-group mb-3 mt-2">
-                    <input value="@header.ReleaseName" type="text" class="form-control" placeholder="Release Name" aria-label="Username">
-                    <input value="@header.ReleaseDate.ToString("yyyy-MM-dd")" type="date" class="form-control" placeholder="Release Type" aria-label="Server">
-                    <input value="@header.ShortDescription" type="text" class="form-control" placeholder="Short Description" aria-label="Server">
+                    <input value="@header.ReleaseName" type="text" class="form-control list-releaseName" placeholder="Release Name" aria-label="Username">
+                    <input value="@header.ReleaseDate.ToString("yyyy-MM-dd")" type="date" class="form-control list-releaseDate" placeholder="Release Type" aria-label="Server">
+                    <input value="@header.ShortDescription" type="text" class="form-control list-releaseShortDescription" placeholder="Short Description" aria-label="Server">
                 </div>
-                <div class="mb-3 form-floating">
-                    <input value="@header.LongDescription" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                <div class="form-floating">
+                    <input value="@header.LongDescription" type="text" class="form-control list-releaseLongDescription" id="floatingInput" placeholder="name@example.com">
                     <label for="floatingInput">Long Description</label>
                 </div>
 
@@ -40,16 +45,37 @@
                         {
                             string textEditorId = $"defaultRTE-{textEditorCount++}";
 
-                            <div class="">
-                                <p class="h6">@headerDetail.Name</p>
-                                <a class="ml-2 btn btn-outline-danger mb-3">Delete Detail #1</a>
+                            <div class="list-detailContainer">
+                                <div class="mt-3">
+                                    <h6 class="list-detail-detailID">@headerDetail.DetailId</h6>
+                                    <p class="h6">@headerDetail.Name</p>
+                                </div>
+
+                                @if (header.Detail.Count() != 1)
+                                {
+                                    <a class="btn btn-outline-danger mb-3"
+                                       href="/SubmitHeader/DeleteOneDetail/@headerDetail.DetailId">Delete</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-danger  mb-3"
+                                       href="/SubmitHeader/deleteAPage/@header.HeaderId">Delete</a>
+                                }
 
                                 <div class="input-group mb-3">
-                                    <select class="form-select" aria-label="Default select example">
-                                        <option selected value="1">Enhancements</option>
-                                        <option value="2">Bug Fixes</option>
+                                    <select class="form-select list-detail-detailType" aria-label="Default select example">
+                                        @if (headerDetail.Type == 1)
+                                        {
+                                            <option selected value="1">Enhancement</option>
+                                            <option value="2">Bug Fix</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="1">Enhancement</option>
+                                            <option selected value="2">Bugs Fix</option>
+                                        }
                                     </select>
-                                    <input value="@headerDetail.Name" type="text" class="form-control" placeholder="Detail Name" aria-label="Username">
+                                    <input class="form-control list-detail-detailName" value="@headerDetail.Name" type="text" placeholder="Detail Name" aria-label="Username">
                                 </div>
 
                                 <div class="input-group">
@@ -63,11 +89,12 @@
             </li>
         }
     </ul>
+    <button id="submitBtn" data-btnType="submitTableView" class="btn btn-primary mt-3">Save</button>
+    @*
 
     <br />
     <br />
     <br />
-    @*
     <table class="table table-hover ">
         <thead>
             <tr>
@@ -167,7 +194,6 @@
         </tbody>
     </table>
     *@
-    <button id="submitBtn" data-btnType="submitTableView" class="btn btn-primary mt-3">Save</button>
 </div>
 
 <ejs-scripts></ejs-scripts>

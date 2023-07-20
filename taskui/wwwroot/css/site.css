@@ -64,3 +64,13 @@ body {
     outline: 1px dashed green;
     min-height: 100px;
 }
+.move-left{
+    margin-right: 1rem;
+    font-size: .8rem;
+    color: grey;
+}
+.up{
+    margin-right: 0;
+    margin-left: 5rem;
+    margin-top: -1rem;
+}
