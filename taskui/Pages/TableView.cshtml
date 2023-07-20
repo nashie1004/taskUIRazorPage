@@ -1,7 +1,9 @@
 ﻿@page "/Edit"
 @model taskui.Pages.TableViewModel
+@using Syncfusion.EJ2.RichTextEditor
 @{
     ViewData["Title"] = "Edit page";
+    int textEditorCount = 1;
 }
 <div class="white-bg-container">
 
@@ -9,14 +11,63 @@
         Edit Table
     </p>
 
-    <ul class="list-group">
-        <li class="list-group-item">An item</li>
-        <li class="list-group-item">A second item</li>
-    </ul>
-    <br />
-    <br />
-    <br />
+    <ul class="list-group mb-4">
+        @foreach (var header in Model.HeaderList)
+        {
+            <li class="list-group-item p-3">
+                <p class="h4 mb-3">@header.ReleaseName</p>
 
+                <p>
+                    <button type="button" class="btn btn-secondary">Add detail</button>
+                    <button data-bs-target="#@header.HeaderId" class="btn btn-outline-primary" type="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapseExample">
+                        Hide Details
+                    </button>
+                </p>
+
+                <div class="input-group mb-3 mt-2">
+                    <input value="@header.ReleaseName" type="text" class="form-control" placeholder="Release Name" aria-label="Username">
+                    <input value="@header.ReleaseDate.ToString("yyyy-MM-dd")" type="date" class="form-control" placeholder="Release Type" aria-label="Server">
+                    <input value="@header.ShortDescription" type="text" class="form-control" placeholder="Short Description" aria-label="Server">
+                </div>
+                <div class="mb-3 form-floating">
+                    <input value="@header.LongDescription" type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Long Description</label>
+                </div>
+
+                <div class="" id="@header.HeaderId">
+                    <div class="">
+                        @foreach (var headerDetail in header.Detail)
+                        {
+                            string textEditorId = $"defaultRTE-{textEditorCount++}";
+
+                            <div class="">
+                                <p class="h6">@headerDetail.Name</p>
+                                <a class="ml-2 btn btn-outline-danger mb-3">Delete Detail #1</a>
+
+                                <div class="input-group mb-3">
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected value="1">Enhancements</option>
+                                        <option value="2">Bug Fixes</option>
+                                    </select>
+                                    <input value="@headerDetail.Name" type="text" class="form-control" placeholder="Detail Name" aria-label="Username">
+                                </div>
+
+                                <div class="input-group">
+                                    <ejs-richtexteditor id="@textEditorId" value="@headerDetail.Description">
+                                    </ejs-richtexteditor>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+
+    <br />
+    <br />
+    <br />
+    @*
     <table class="table table-hover ">
         <thead>
             <tr>
@@ -34,10 +85,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach(var header in Model.HeaderList)
+            @foreach (var header in Model.HeaderList)
             {
                 bool checkIfFirst = true;
-                foreach(var detail in header.Detail)
+                foreach (var detail in header.Detail)
                 {
                     string releaseNameClassName = $"trReleaseNameMain{header.HeaderId} form-control form-control-sm";
                     string releaseDateClassName = $"trReleaseDateMain{header.HeaderId} form-control form-control-sm";
@@ -67,10 +118,6 @@
                             @if (checkIfFirst)
                             {
                                 <textarea class="@longDescriptionClassName" placeholder="Long Description here..." id="floatingTextarea">@header.LongDescription</textarea>
-                                @*
-
-                                <input value="@header.LongDescription" class="@longDescriptionClassName" type="text" placeholder="Description..." />
-                                *@
                             }
                         </td>
                         <td class="trDetailId">@detail.DetailId</td>
@@ -80,7 +127,8 @@
                                 {
                                     <option selected value="1">1 - Enhancements</option>
                                     <option value="2">2 - Bugs/Fixes</option>
-                                } else
+                                }
+                                else
                                 {
                                     <option value="1">1 - Enhancements</option>
                                     <option selected value="2">2 - Bugs/Fixes</option>
@@ -91,27 +139,25 @@
                             <input value="@detail.Name" class="trName detailName form-control form-control-sm" type="text" placeholder="Name..." />
                         </td>
                         <td class="">
-                            @*
-                            <textarea value="@detail.Description" placeholder="Description here..."></textarea>
-                            *@
                             <input value="@detail.Description" class="trDesc detailName form-control form-control-sm" type="text" placeholder="Description..." />
                         </td>
                         <td class="">
                             @if (header.Detail.Count() != 1)
                             {
-                                <a class="btn btn-danger deleteDetailBtnOnTable" 
-                                href="/SubmitHeader/DeleteOneDetail/@detail.DetailId">Delete</a>
-                            } else
+                                <a class="btn btn-danger deleteDetailBtnOnTable"
+                                    href="/SubmitHeader/DeleteOneDetail/@detail.DetailId">Delete</a>
+                            }
+                            else
                             {
                                 <a class="btn btn-danger deleteDetailBtnOnTable"
-                                   href="/SubmitHeader/deleteAPage/@header.HeaderId">Delete</a>
+                                    href="/SubmitHeader/deleteAPage/@header.HeaderId">Delete</a>
                             }
                         </td>
                         <td>
                             @if (checkIfFirst)
                             {
                                 <a class="btn btn-secondary deleteDetailBtnOnTable"
-                                   href="/SubmitHeader/AddOneDetail/@header.HeaderId">Add</a>
+                                    href="/SubmitHeader/AddOneDetail/@header.HeaderId">Add</a>
                             }
                         </td>
                     </tr>
@@ -120,6 +166,8 @@
             }
         </tbody>
     </table>
-
+    *@
     <button id="submitBtn" data-btnType="submitTableView" class="btn btn-primary mt-3">Save</button>
 </div>
+
+<ejs-scripts></ejs-scripts>

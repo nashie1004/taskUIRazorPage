@@ -58,3 +58,9 @@ body {
 .detail-description{
     margin-left: 1.6rem;
 }
+.td-below{
+    display: block;
+    width: 100%;
+    outline: 1px dashed green;
+    min-height: 100px;
+}

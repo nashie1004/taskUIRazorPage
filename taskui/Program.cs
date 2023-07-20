@@ -2,14 +2,15 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using taskui.Contexts;
 using taskui.Services;
+using Syncfusion.Blazor;
 
 var builder = WebApplication.CreateBuilder(args);
 
-Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2VVhjQlFac1dJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxRd0djXX1ecXFRQGFdWUM=");
+Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Mgo+DSMBMAY9C3t2V1hhQlJNfV5AQmBIYVp/TGpJfl96cVxMZVVBJAtUQF1hSn5Ud0xhWXtbdHxQQGNe\r\n");
 
 // Add services to the container.
-builder.Services.AddRazorPages();
 builder.Services.AddControllers();
+builder.Services.AddRazorPages();
 
 #if DEBUG
 var connectionString = "DefaultConnection";

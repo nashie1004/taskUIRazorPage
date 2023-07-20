@@ -16,6 +16,8 @@ namespace taskui.Pages
         }
         public List<Header> HeaderList { get; set; }
 
+        [BindProperty]
+        public int TextEditorCount { get; set; } = 0;
         public async Task OnGet()
         {
             var tempHeader = await dataAccess_.GetHeaderList();

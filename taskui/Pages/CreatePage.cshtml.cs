@@ -13,9 +13,13 @@ namespace taskui.Pages
             dataAccess_ = dataAccess;
         }
 
+        [BindProperty(SupportsGet = true)]
+        public int IncrementCount { get; set; } = 0;
         public void OnGet()
         {
+            Console.WriteLine(IncrementCount);
         }
+
 
         /* redo this *
         public IActionResult OnPost(Header data) 
