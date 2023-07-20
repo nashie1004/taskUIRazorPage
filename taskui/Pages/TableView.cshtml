@@ -17,7 +17,7 @@
             int detailCount = 1;
 
             <li class="list-group-item p-3 table-list-container">
-                <h6 class="list-releaseHeaderID">@header.HeaderId</h6>
+                <h6 class="list-releaseHeaderID smaller-h6">@header.HeaderId</h6>
                 <p class="h4 mb-3">@header.ReleaseName</p>
 
                 <p>
@@ -47,7 +47,8 @@
 
                             <div class="list-detailContainer">
                                 <div class="mt-3">
-                                    <h6 class="list-detail-detailID">@headerDetail.DetailId</h6>
+                                    <h5>@(detailCount++).</h5>
+                                    <h6 class="list-detail-detailID smaller-h6">@headerDetail.DetailId</h6>
                                     <p class="h6">@headerDetail.Name</p>
                                 </div>
 
@@ -67,7 +68,7 @@
                                         @if (headerDetail.Type == 1)
                                         {
                                             <option selected value="1">Enhancement</option>
-                                            <option value="2">Bug Fix</option>
+                                            <option value="2">Bug Fixes</option>
                                         }
                                         else
                                         {

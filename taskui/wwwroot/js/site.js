@@ -188,75 +188,40 @@ function tableViewSubmit() {
 
                 console.log('submit array: ', submitArray)
             } else {
-                Array.from(images).map(async function (image) {
-                    var base64 = await getBase64FromImageUrl(image.src);
-                    content = content.replace(image.src, base64).toString();
+                /*Array.from(images).map(function (image) {
+                    var base64 = getBase64Image(image);
+                    console.log(base64)
+                })*/
 
-                    submitArray.push({
-                        HeaderId: releaseHeaderID,
-                        ReleaseNameTable: releaseName,
-                        ReleaseDateTable: releaseDate,
-                        ShortDescription: releaseShortDescription,
-                        LongDescription: releaseLongDescription,
-                        DetailId: detailID,
-                        DetailTypeTable: Number(parseInt(detailType)),
-                        DetailNameTable: detailName,
-                        DetailDescriptionTable: content
-                    })
 
-                    console.log('submit array: ', submitArray)
+                submitArray.push({
+                    HeaderId: releaseHeaderID,
+                    ReleaseNameTable: releaseName,
+                    ReleaseDateTable: releaseDate,
+                    ShortDescription: releaseShortDescription,
+                    LongDescription: releaseLongDescription,
+                    DetailId: detailID,
+                    DetailTypeTable: Number(parseInt(detailType)),
+                    DetailNameTable: detailName,
+                    DetailDescriptionTable: content
                 })
+
+                console.log('submit array: ', submitArray)
+
             }
 
-            function getBase64FromImageUrl(url) {
-            return new Promise(function (resolve, reject) {
-                var img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.onload = function () {
-                    var canvas = document.createElement("canvas");
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, img.width, img.height);
-                    var base64 = canvas.toDataURL("image/png"); // You can also use "image/jpeg" for JPEG format
-                    resolve(base64);
-                };
-                img.onerror = function () {
-                    reject(new Error("Failed to load image"));
-                };
-                img.src = url;
-            });
+            function getBase64Image(img) {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+                var dataURL = canvas.toDataURL("image/png");
+                return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
             }
-            
 
         })
     })
-
-    /*
-    document.querySelectorAll(".headerTr").forEach(tr => {
-        let headerId = tr.querySelector(".trHeaderId").textContent
-        let releaseNameTable = document.querySelector(`.trReleaseNameMain${headerId}`).value
-        let releaseDateTable = document.querySelector(`.trReleaseDateMain${headerId}`).value
-        let shortDescription = document.querySelector(`.trShortDescriptionMain${headerId}`).value
-        let longDescription = document.querySelector(`.trLongDescriptionMain${headerId}`).value
-
-        let detailId = tr.querySelector(".trDetailId").textContent
-        let detailTypeTable = tr.querySelector(".trType").value
-        let detailNameTable = tr.querySelector(".trName").value
-        let detailDescriptionTable = tr.querySelector(".trDesc").value
-
-        submitArray.push({
-            HeaderId: headerId,
-            ReleaseNameTable: releaseNameTable,
-            ReleaseDateTable: releaseDateTable,
-            ShortDescription: shortDescription,
-            LongDescription: longDescription,
-            DetailId: detailId,
-            DetailTypeTable: Number(parseInt(detailTypeTable)),
-            DetailNameTable: detailNameTable,
-            DetailDescriptionTable: detailDescriptionTable
-        })
-    })*/
 
     submitTable(submitTableViewURL);
 
@@ -271,7 +236,7 @@ function tableViewSubmit() {
             })
         })
 
-        //window.location.href = "/";
+        window.location.href = "/";
     }
     alert('Edited success')
 }

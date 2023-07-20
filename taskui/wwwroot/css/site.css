@@ -65,12 +65,18 @@ body {
     min-height: 100px;
 }
 .move-left{
+    font-size: .8rem;
+    color: grey;
     margin-right: 1rem;
+    margin-left: 1rem;
+}
+.up {
+    margin-right: 0;
+    margin-left: 4rem;
+    margin-top: -1rem;
     font-size: .8rem;
     color: grey;
 }
-.up{
-    margin-right: 0;
-    margin-left: 5rem;
-    margin-top: -1rem;
+.smaller-h6{
+    font-size: .9rem;
 }

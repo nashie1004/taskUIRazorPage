@@ -52,7 +52,8 @@
                                             <li class="">
                                                 @detail.Name
                                                 <div class="detail-description innerHTMLDesc">
-                                                    &#8226; @detail.Description
+                                                    @* &#8226; *@
+                                                    @detail.Description
                                                 </div>
                                             </li>
                                         }
@@ -60,7 +61,7 @@
                                 </ul>
 
                                 <br />
-                                <h5 class="text-danger">Bugs/Fixes</h5>
+                                <h5 class="text-danger">Bug Fixes</h5>
                                 <hr class="hr hr-blurry" />
                                 <ul class="">
                                     @foreach (var detail in result.Detail)
@@ -70,7 +71,8 @@
                                             <li class="">
                                                 @detail.Name 
                                                 <div class="detail-description innerHTMLDesc">
-                                                    &#8226; @detail.Description
+                                                    @* &#8226; *@
+                                                    @detail.Description
                                                 </div>
                                             </li>
                                         }
@@ -106,7 +108,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <img src='https://i.ibb.co/KLt38B1/logo.png' style="">
                                 <div>
-                                    <p class="move-left">Technical Document</p>
+                                    <p class="move-left">Technical_Document</p>
                                     <p class="move-left up">${new Date().toLocaleDateString()}</p>
                                 </div>
                             </div>
@@ -132,7 +134,7 @@
                     x: 0,
                     y: 0,
                     width: 190, //target width in the PDF document
-                    windowWidth: 675 //window width in CSS pixels
+                    windowWidth: 820 //window width in CSS pixels
                 });
 
 
@@ -142,10 +144,10 @@
         window.onload = function(){
             document.querySelectorAll(".innerHTMLDesc").forEach(des => {
                 let div = des.innerHTML
-                //div = div.replace(/&gt;/g, ">")
-                //div = div.replace(/&lt;/g, "<")
-                console.log(div)
-                //div.innerHTML = '123'; div.toString()
+                div = div.replace(/&gt;/g, ">")
+                div = div.replace(/&lt;/g, "<")
+                des.innerHTML = div.toString()
+                console.log(des)
             })
         }
         /*
