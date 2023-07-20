@@ -4,7 +4,7 @@
 @{
     ViewData["Title"] = "Home page";
 
-    string htmlString = "<h1><strong><em><span style='text-decoration: underline;'>aasdasdasd</span></em></strong>";
+    string htmlString = "<h4>test</h4>"; //"<h1><strong><em><span style='text-decoration: underline;'>aasdasdasd</span></em></strong>";
 }
 @*
     @section ControlsSection{
@@ -178,12 +178,20 @@
             // Find all image elements in the content
             var images = rte.element.querySelectorAll("img");
 
+            console.log(rte.value, images.length)
+            if (images.length == 0){
+                console.log(1)
+            } else {
+                console.log(12)
+                //
+            }
+
             // Asynchronously convert each image to Base64
             Promise.all(Array.from(images).map(async function (image) {
                 var base64 = await getBase64FromImageUrl(image.src);
                 content = content.replace(image.src, base64);
 
-                console.log(content);
+                console.log('value', content);
             })).then(function () {
                 // Now you have the content with images in Base64 format
                 // You can submit the 'content' variable to the server using AJAX or other methods.
