@@ -6,13 +6,14 @@
     ViewData["Title"] = "Home page";
 }
 <div class="white-bg-container">
-
-    <a href="https://stackoverflow.com/questions/49854127/how-add-header-and-footer-on-all-pdf-page-in-jspdf-with-addhtml-method">
-        header footer pdf
-    </a>
-    <a href="https://www.w3docs.com/snippets/javascript/how-to-convert-the-image-into-a-base64-string-using-javascript.html">
-        convert to base64    
-    </a>
+    @*
+        <a href="https://stackoverflow.com/questions/49854127/how-add-header-and-footer-on-all-pdf-page-in-jspdf-with-addhtml-method">
+            header footer pdf
+        </a>
+        <a href="https://www.w3docs.com/snippets/javascript/how-to-convert-the-image-into-a-base64-string-using-javascript.html">
+            convert to base64    
+        </a>
+    *@
 
     <p class="page-title">
         View Release
@@ -39,7 +40,7 @@
                 <div class="accordion-item">
                     <h2 class="accordion-header">
                         <button class="@buttonClassName" type="button" data-bs-toggle="collapse" data-bs-target="#@result.HeaderId" aria-expanded="false" aria-controls="@result.HeaderId">
-                            <b>@result.ReleaseName.ToUpper()</b>  - @result.ReleaseDate.ToString("yyyy-MM-dd")
+                            <b>@result.ReleaseName.ToUpper()</b>&nbsp;- @result.ReleaseDate.ToString("yyyy-MM-dd")
                         </button>
                     </h2>
                     <div id="@result.HeaderId" class="@accordionClassName" data-bs-parent="#accordionExample">
@@ -102,7 +103,7 @@
     </div>
 </div>
 @section scripts{
-        <script>
+    <script>
 
         document.querySelectorAll(".jsPDF-btn").forEach(btn => {
             btn.addEventListener("click", (e) => {
@@ -111,9 +112,12 @@
 
                 const div = document.createElement("div")
 
+                //<img src='https://i.ibb.co/KLt38B1/logo.png' style="">
+                
                 div.innerHTML = `
                             <div class="d-flex justify-content-between align-items-center">
-                                <img src='https://i.ibb.co/KLt38B1/logo.png' style="">
+                                <img src='js/image.png' style="" alt="logoImg">
+
                                 <div>
                                     <p class="move-left">Technical_Document</p>
                                     <p class="move-left up">${new Date().toLocaleDateString()}</p>
@@ -144,70 +148,29 @@
                     windowWidth: 820 //window width in CSS pixels
                 });
 
+                // 7/24 - test footer and header
+
+                console.log('test\n')
 
             })
         })
 
         window.onload = function(){
             document.querySelectorAll(".innerHTMLDesc").forEach(des => {
+                des.innerHTML = des.innerText.toString()
+
+                /*
                 let div = des.innerHTML
                 div = div.replace(/&gt;/g, ">")
                 div = div.replace(/&lt;/g, "<")
-                des.innerHTML = div.toString()
-                console.log(des)
+                div = div.replace(/&nbsp;/g, " ")
+                div = div.replace(/&amp;/g, "&")
+                div = div.replace(/&quot;/g, '"');
+                div = div.replace(/&apos;/g, "'");
+                
+                des.innerHTML = div.toString();*/
             })
         }
-        /*
-        document.getElementById('btntest').onclick = function () {
-            // Get the Rich Text Editor instance
-            var rte = document.getElementById("default").ej2_instances[0];
-
-            // Get the content from the Rich Text Editor
-            var content = rte.value;
-
-            // Find all image elements in the content
-            var images = rte.element.querySelectorAll("img");
-
-            console.log(rte.value, images.length)
-            if (images.length == 0){
-                console.log(1)
-            } else {
-                console.log(12)
-                //
-            }
-
-            // Asynchronously convert each image to Base64
-            Promise.all(Array.from(images).map(async function (image) {
-                var base64 = await getBase64FromImageUrl(image.src);
-                content = content.replace(image.src, base64);
-
-                console.log('value', content);
-            })).then(function () {
-                // Now you have the content with images in Base64 format
-                // You can submit the 'content' variable to the server using AJAX or other methods.
-                // For example, you can use jQuery AJAX to send the content to the server:
-            });
-
-            function getBase64FromImageUrl(url) {
-                return new Promise(function (resolve, reject) {
-                    var img = new Image();
-                    img.crossOrigin = "Anonymous";
-                    img.onload = function () {
-                        var canvas = document.createElement("canvas");
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        var ctx = canvas.getContext("2d");
-                        ctx.drawImage(img, 0, 0, img.width, img.height);
-                        var base64 = canvas.toDataURL("image/png"); // You can also use "image/jpeg" for JPEG format
-                        resolve(base64);
-                    };
-                    img.onerror = function () {
-                        reject(new Error("Failed to load image"));
-                    };
-                    img.src = url;
-                });
-            }
-        }*/
 
     </script>
 }

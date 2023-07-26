@@ -80,3 +80,7 @@ body {
 .smaller-h6{
     font-size: .9rem;
 }
+.list-container{
+    list-style-type: none;
+    margin-left: -1.5rem;
+}

@@ -1,10 +1,16 @@
-﻿let count = 1;
-
-// urls
+﻿// urls
 const createPageURL = "https://localhost:7249/Create";
 const submitHeaderURL = "https://localhost:7249/SubmitHeader";
 const baseURL = "https://localhost:7249/";
 const submitTableViewURL = "https://localhost:7249/SubmitHeader/submitTableView";
+
+let array = [];
+let releaseName
+let releaseDate
+let shortDescription
+let longDescription
+
+let count = 1;
 
 // edit page not showing this so add now
 document.querySelectorAll(".deleteDetailBtnOnTable").forEach(item => {
@@ -12,12 +18,6 @@ document.querySelectorAll(".deleteDetailBtnOnTable").forEach(item => {
         e.target.parentElement.parentElement.remove();
     })
 })
-
-let array = [];
-let releaseName
-let releaseDate
-let shortDescription
-let longDescription
 
 if (window.location.href.toUpperCase() != baseURL.toUpperCase()) {
     document.querySelector("#submitBtn").onclick = function (e) {
@@ -50,58 +50,15 @@ function getInputValues() {
 
         var images = rte.element.querySelectorAll("img");
 
-        if (images.length == 0) {
-            const detailType = parseInt(item.querySelector(".selectedTypeSelect").value)
-            const detailName = item.querySelector(".detailNameInput").value
-            const detailDescription = content.toString()
+        const detailType = parseInt(item.querySelector(".selectedTypeSelect").value)
+        const detailName = item.querySelector(".detailNameInput").value
+        const detailDescription = content.toString()
 
-            array.push({
-                type: detailType,
-                name: detailName,
-                description: detailDescription
-            })
-        } else {
-            Array.from(images).map(async function (image) {
-                var base64 = await getBase64FromImageUrl(image.src);
-                content = content.replace(image.src, base64);
-
-                const detailType = parseInt(item.querySelector(".selectedTypeSelect").value)
-                const detailName = item.querySelector(".detailNameInput").value
-                const detailDescription = content.toString()
-
-                array.push({
-                    type: detailType,
-                    name: detailName,
-                    description: detailDescription
-                })
-            })
-        }
-
-        function getBase64FromImageUrl(url) {
-            return new Promise(function (resolve, reject) {
-                var img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.onload = function () {
-                    var canvas = document.createElement("canvas");
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    var ctx = canvas.getContext("2d");
-                    ctx.drawImage(img, 0, 0, img.width, img.height);
-                    var base64 = canvas.toDataURL("image/png"); // You can also use "image/jpeg" for JPEG format
-                    resolve(base64);
-                };
-                img.onerror = function () {
-                    reject(new Error("Failed to load image"));
-                };
-                img.src = url;
-            });
-        }
-
-        /*const dType = item.querySelector(".detailType")
-        const dName = item.querySelector(".detailName")
-        const dDescription = item.querySelector(".detailDescription")
-
-        */
+        array.push({
+            type: detailType,
+            name: detailName,
+            description: detailDescription
+        })
     })
 }
 
@@ -114,7 +71,7 @@ async function submitFunction(URL) {
         LongDescription: longDescription,
         Details: array
     }
-    console.log(dataBody)
+    console.log('created: ', dataBody)
     
     const res = await fetch(URL, {
         method: "POST",
@@ -148,7 +105,10 @@ async function submitFunction(URL) {
 function tableViewSubmit() {
     const submitArray = []
     let detailIncrement = 1;
-    document.querySelectorAll(".table-list-container").forEach(list => {
+
+    console.log(document.querySelectorAll(".table-list-container"))
+    document.querySelectorAll(".table-list-container").forEach(async (list) => {
+
         const releaseHeaderID = list.querySelector(".list-releaseHeaderID").textContent
         const releaseName = list.querySelector(".list-releaseName").value
         const releaseDate = list.querySelector(".list-releaseDate").value
@@ -161,68 +121,30 @@ function tableViewSubmit() {
             const detailName = detailInList.querySelector(".list-detail-detailName").value;
             const detailType = detailInList.querySelector(".list-detail-detailType").value;
 
-            console.log('\ndataset here: ', releaseName, detailID)
-            
-
-            //console.log(detailInList, document.querySelector(`#defaultRTE-${detailIncrement++}`))
             const rte = document.querySelector(`#defaultRTE-${detailIncrement++}`).ej2_instances[0]
 
             let content = rte.value;
 
             var images = rte.element.querySelectorAll("img");
+            content = content.toString();
 
-            if (images.length == 0) {
-                content = content.toString();
-
-                submitArray.push({
-                    HeaderId: releaseHeaderID,
-                    ReleaseNameTable: releaseName,
-                    ReleaseDateTable: releaseDate,
-                    ShortDescription: releaseShortDescription,
-                    LongDescription: releaseLongDescription,
-                    DetailId: detailID,
-                    DetailTypeTable: Number(parseInt(detailType)),
-                    DetailNameTable: detailName,
-                    DetailDescriptionTable: content
-                })
-
-                console.log('submit array: ', submitArray)
-            } else {
-                /*Array.from(images).map(function (image) {
-                    var base64 = getBase64Image(image);
-                    console.log(base64)
-                })*/
-
-
-                submitArray.push({
-                    HeaderId: releaseHeaderID,
-                    ReleaseNameTable: releaseName,
-                    ReleaseDateTable: releaseDate,
-                    ShortDescription: releaseShortDescription,
-                    LongDescription: releaseLongDescription,
-                    DetailId: detailID,
-                    DetailTypeTable: Number(parseInt(detailType)),
-                    DetailNameTable: detailName,
-                    DetailDescriptionTable: content
-                })
-
-                console.log('submit array: ', submitArray)
-
-            }
-
-            function getBase64Image(img) {
-                var canvas = document.createElement("canvas");
-                canvas.width = img.width;
-                canvas.height = img.height;
-                var ctx = canvas.getContext("2d");
-                ctx.drawImage(img, 0, 0);
-                var dataURL = canvas.toDataURL("image/png");
-                return dataURL.replace(/^data:image\/?[A-z]*;base64,/);
-            }
-
+            submitArray.push({
+                HeaderId: releaseHeaderID,
+                ReleaseNameTable: releaseName,
+                ReleaseDateTable: releaseDate,
+                ShortDescription: releaseShortDescription,
+                LongDescription: releaseLongDescription,
+                DetailId: detailID,
+                DetailTypeTable: Number(parseInt(detailType)),
+                DetailNameTable: detailName,
+                DetailDescriptionTable: content
+            })
+                //console.log('submit array: ', submitArray)
         })
+
     })
 
+    console.log('submit array: ', submitArray)
     submitTable(submitTableViewURL);
 
     async function submitTable(URL) {
@@ -237,7 +159,7 @@ function tableViewSubmit() {
         })
 
         window.location.href = "/";
+        alert('Edit success')
     }
-    alert('Edited success')
 }
 

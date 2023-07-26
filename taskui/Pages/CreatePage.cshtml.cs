@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Diagnostics.Tracing;
 using taskui.Models;
 using taskui.Services;
 
@@ -15,24 +16,28 @@ namespace taskui.Pages
 
         [BindProperty(SupportsGet = true)]
         public int IncrementCount { get; set; } = 0;
+
         public void OnGet()
         {
-            Console.WriteLine(IncrementCount);
+        }
+        public IActionResult OnPostAddButton()
+        {
+            IncrementCount = IncrementCount + 1;
+            //Console.WriteLine("\add detail button\n");
+
+            return Redirect($"/create/{IncrementCount}");
+        }
+        public IActionResult OnPostRemoveButton() 
+        {
+            IncrementCount = IncrementCount - 1;
+            //Console.WriteLine("\nremove detail button\n");
+
+            return Redirect($"/create/{IncrementCount}");
         }
 
-
-        /* redo this *
-        public IActionResult OnPost(Header data) 
+        public IActionResult Test()
         {
-            try
-            {
-                dataAccess_.SubmitForm(data);
-            } 
-            catch (Exception ex)
-            {
-                
-            }
-            return Redirect("/");
-        }*/
+            return Redirect($"/create/{IncrementCount}");
+        }
     }
 }
